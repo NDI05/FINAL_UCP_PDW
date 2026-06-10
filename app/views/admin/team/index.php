@@ -1,64 +1,66 @@
-<section class="border-b border-[#333] px-6 lg:px-12 py-10">
-    <div class="flex items-center justify-between mb-8">
+<div class="max-w-6xl mx-auto px-6 lg:px-10 py-10">
+    <div class="flex items-center justify-between mb-10">
         <div>
-            <p class="text-xs font-mono text-[#666] tracking-[.3em] uppercase">[ TEAM CMS ]</p>
-            <h1 class="text-xl sm:text-2xl font-bold text-white tracking-tight mt-2">Anggota <span class="text-[#CCFF00]">Tim</span></h1>
+            <p class="text-[10px] font-mono text-[#666] tracking-[.3em] uppercase">[ CMS ]</p>
+            <h1 class="text-2xl lg:text-3xl font-bold text-white tracking-tight mt-1">TEAM</h1>
         </div>
-        <a href="/admin/team/create" class="px-4 py-2 border border-[#CCFF00] text-xs font-mono text-[#CCFF00] hover:bg-[#CCFF00] hover:text-[#0a0a0a] transition-all no-underline">
-            [ + NEW MEMBER ]
-        </a>
+        <a href="/admin/team/create" class="px-5 py-2 bg-[#CCFF00] text-[#0a0a0a] text-[10px] font-mono font-bold tracking-[.2em] uppercase hover:bg-white no-underline">+ ADD MEMBER</a>
     </div>
 
-    <?php if (isset($_GET['status'])): ?>
-        <div class="border border-[#CCFF00] px-4 py-3 mb-8">
-            <p class="text-xs font-mono text-[#CCFF00] tracking-[.2em]">
-                [ TEAM MEMBER <?= strtoupper(htmlspecialchars($_GET['status'])) ?> SUCCESSFULLY ]
-            </p>
-        </div>
-    <?php endif; ?>
-
-    <?php if (empty($members)): ?>
-        <div class="border border-[#333] p-12 text-center">
-            <p class="text-xs font-mono text-[#666] tracking-[.2em] uppercase">[ NO TEAM MEMBERS DEFINED ]</p>
-            <a href="/admin/team/create" class="inline-block mt-4 text-xs font-mono text-[#CCFF00] hover:underline">[ ADD FIRST MEMBER ]</a>
-        </div>
-    <?php else: ?>
-        <div class="border border-[#333] overflow-x-auto">
-            <table class="w-full text-left border-collapse text-xs font-mono">
-                <thead>
-                    <tr class="border-b border-[#333] bg-[#0c0c0c] text-[#666] uppercase tracking-[.1em]">
-                        <th class="p-4 w-16 text-center">ORDER</th>
-                        <th class="p-4 w-20">AVATAR</th>
-                        <th class="p-4">NAME</th>
-                        <th class="p-4">ROLE</th>
-                        <th class="p-4 w-24 text-center">ACTIONS</th>
+    <div class="border border-[#333] overflow-x-auto">
+        <table class="w-full text-left">
+            <thead>
+                <tr class="border-b border-[#333] bg-[#0a0a0a]">
+                    <th class="px-4 py-3 text-[10px] font-mono text-[#666] uppercase tracking-[.2em]">#</th>
+                    <th class="px-4 py-3 text-[10px] font-mono text-[#666] uppercase tracking-[.2em]">Name</th>
+                    <th class="px-4 py-3 text-[10px] font-mono text-[#666] uppercase tracking-[.2em] hidden sm:table-cell">Role</th>
+                    <th class="px-4 py-3 text-[10px] font-mono text-[#666] uppercase tracking-[.2em] hidden md:table-cell">Order</th>
+                    <th class="px-4 py-3 text-[10px] font-mono text-[#666] uppercase tracking-[.2em] text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($members)): ?>
+                    <tr>
+                        <td colspan="5" class="px-4 py-12 text-center text-[10px] font-mono text-[#333] uppercase tracking-[.2em]">No team members yet</td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($members as $m): 
-                        $imgUrl = !empty($m['image']) ? (str_starts_with($m['image'], 'http') ? $m['image'] : '/' . $m['image']) : '';
-                    ?>
-                        <tr class="border-b border-[#333] hover:bg-[#111]/40 transition-all">
-                            <td class="p-4 text-center text-[#CCFF00] font-bold"><?= (int)$m['order_num'] ?></td>
-                            <td class="p-4">
-                                <?php if ($imgUrl): ?>
-                                    <img src="<?= htmlspecialchars($imgUrl) ?>" alt="Member Photo" class="h-10 w-10 rounded-full object-cover border border-[#333]">
-                                <?php else: ?>
-                                    <div class="h-10 w-10 rounded-full bg-[#333] flex items-center justify-center text-[10px] text-white">?</div>
-                                <?php endif; ?>
+                <?php else: ?>
+                    <?php foreach ($members as $i => $member): ?>
+                        <tr class="<?= $i > 0 ? 'border-t border-[#333]' : '' ?> hover:bg-[#111]">
+                            <td class="px-4 py-3 text-xs font-mono text-[#666]"><?= (int)$member['id'] ?></td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center gap-3">
+                                    <?php if (!empty($member['image'])): ?>
+                                        <img src="/<?= htmlspecialchars($member['image']) ?>" alt="" class="w-8 h-8 object-cover grayscale border border-[#333]">
+                                    <?php else: ?>
+                                        <div class="w-8 h-8 bg-[#111] border border-[#333] flex items-center justify-center text-[10px] font-mono text-[#333]">—</div>
+                                    <?php endif; ?>
+                                    <span class="text-xs font-display font-semibold text-white"><?= htmlspecialchars($member['name']) ?></span>
+                                </div>
                             </td>
-                            <td class="p-4 font-bold text-white uppercase text-sm"><?= htmlspecialchars($m['name']) ?></td>
-                            <td class="p-4 text-[#999] uppercase"><?= htmlspecialchars($m['role']) ?></td>
-                            <td class="p-4 text-center">
-                                <div class="flex items-center justify-center gap-4">
-                                    <a href="/admin/team/edit?id=<?= $m['id'] ?>" class="text-[#CCFF00] hover:text-white transition-all no-underline">[ EDIT ]</a>
-                                    <a href="/admin/team/delete?id=<?= $m['id'] ?>" onclick="return confirm('Hapus anggota tim ini?');" class="text-red-500 hover:text-white transition-all no-underline">[ DELETE ]</a>
+                            <td class="px-4 py-3 text-[10px] font-mono text-[#666] hidden sm:table-cell"><?= htmlspecialchars($member['role']) ?></td>
+                            <td class="px-4 py-3 text-[10px] font-mono text-[#666] hidden md:table-cell"><?= (int)$member['order_num'] ?></td>
+                            <td class="px-4 py-3 text-right">
+                                <div class="flex items-center justify-end gap-3">
+                                    <a href="/admin/team/edit?id=<?= (int)$member['id'] ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline">[ EDIT ]</a>
+                                    <a href="/admin/team/delete?id=<?= (int)$member['id'] ?>" class="text-[10px] font-mono text-[#666] hover:text-red-400 no-underline" onclick="return confirm('Delete this team member?')">[ DELETE ]</a>
                                 </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
-                </tbody>
-            </table>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <?php if ($totalPages > 1): ?>
+        <div class="flex items-center justify-center gap-4 mt-8">
+            <?php if ($page > 1): ?>
+                <a href="/admin/team?page=<?= $page - 1 ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">[ PREV ]</a>
+            <?php endif; ?>
+            <span class="text-[10px] font-mono text-[#333]"><?= $page ?> / <?= $totalPages ?></span>
+            <?php if ($page < $totalPages): ?>
+                <a href="/admin/team?page=<?= $page + 1 ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">[ NEXT ]</a>
+            <?php endif; ?>
         </div>
     <?php endif; ?>
-</section>
+</div>

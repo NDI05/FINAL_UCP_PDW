@@ -1,75 +1,97 @@
-<section class="border-b border-[#333] px-6 lg:px-12 py-10">
-    <div class="mb-8">
-        <p class="text-xs font-mono text-[#666] tracking-[.3em] uppercase">[ SETTINGS ]</p>
-        <h1 class="text-xl sm:text-2xl font-bold text-white tracking-tight mt-2">SITE <span class="text-[#CCFF00]">SETTINGS</span></h1>
+<div class="max-w-4xl mx-auto px-6 lg:px-10 py-10">
+    <div class="mb-10">
+        <p class="text-[10px] font-mono text-[#666] tracking-[.3em] uppercase">[ CMS ]</p>
+        <h1 class="text-2xl lg:text-3xl font-bold text-white tracking-tight mt-1">SITE SETTINGS</h1>
     </div>
 
-    <?php if (isset($_GET['status']) && $_GET['status'] === 'saved'): ?>
+    <?php if (!empty($success)): ?>
         <div class="border border-[#CCFF00] px-4 py-3 mb-8">
-            <p class="text-xs font-mono text-[#CCFF00] tracking-[.2em]">[ SETTINGS SAVED SUCCESSFULLY ]</p>
+            <p class="text-[11px] font-mono text-[#CCFF00]">[ OK ] <?= htmlspecialchars($success) ?></p>
         </div>
     <?php endif; ?>
 
-    <?php if (empty($grouped)): ?>
-        <div class="border border-[#333] p-10 text-center">
-            <p class="text-xs font-mono text-[#333] tracking-[.2em] uppercase">[ NO SETTINGS FOUND — RUN SEED SQL ]</p>
-        </div>
-    <?php else: ?>
-        <form method="POST" action="/admin/settings" enctype="multipart/form-data" class="space-y-12 max-w-3xl">
-            <?php foreach ($grouped as $group => $items): ?>
-                <div>
-                    <div class="flex items-center gap-4 mb-6">
-                        <p class="text-[10px] font-mono text-[#CCFF00] tracking-[.3em] uppercase">
-                            [ <?= htmlspecialchars(strtoupper($group)) ?> ]
-                        </p>
-                        <div class="flex-1 border-t border-[#222]"></div>
-                    </div>
-                    <div class="space-y-5">
-                        <?php foreach ($items as $s): ?>
-                            <div>
-                                <label class="block text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mb-2">
-                                    [ <?= htmlspecialchars(strtoupper($s['label'] ?: $s['key'])) ?> ]
-                                </label>
-                                <?php if (str_ends_with($s['key'], '_image')): ?>
-                                    <?php if (!empty($s['value'])): ?>
-                                        <div class="mb-2">
-                                            <img src="<?= str_starts_with($s['value'], 'http') ? htmlspecialchars($s['value']) : '/' . htmlspecialchars($s['value']) ?>" alt="Preview" class="h-24 object-contain border border-[#333] p-1 bg-[#111]">
-                                        </div>
-                                    <?php endif; ?>
-                                    <div class="flex flex-col gap-2">
-                                        <input type="text"
-                                               name="settings[<?= htmlspecialchars($s['key']) ?>]"
-                                               value="<?= htmlspecialchars($s['value']) ?>"
-                                               placeholder="Or paste an image URL..."
-                                               class="w-full bg-transparent border border-[#333] px-4 py-2.5 text-white text-xs font-mono outline-none focus:border-[#CCFF00]">
-                                        <input type="file"
-                                               name="settings_image[<?= htmlspecialchars($s['key']) ?>]"
-                                               accept="image/*"
-                                               class="text-xs font-mono text-[#666] file:mr-4 file:py-2 file:px-4 file:border file:border-[#333] file:bg-[#111] file:text-[#999] file:hover:bg-[#CCFF00] file:hover:text-[#0a0a0a] cursor-pointer file:font-mono file:text-xs">
-                                    </div>
-                                <?php elseif (strlen($s['value']) > 80 || strpos($s['value'], "\n") !== false): ?>
-                                    <textarea name="settings[<?= htmlspecialchars($s['key']) ?>]"
-                                              rows="3"
-                                              class="w-full bg-transparent border border-[#333] px-4 py-3 text-white text-sm font-mono outline-none focus:border-[#CCFF00] resize-y"><?= htmlspecialchars($s['value']) ?></textarea>
-                                <?php else: ?>
-                                    <input type="text"
-                                           name="settings[<?= htmlspecialchars($s['key']) ?>]"
-                                           value="<?= htmlspecialchars($s['value']) ?>"
-                                           class="w-full bg-transparent border border-[#333] px-4 py-3 text-white text-sm font-mono outline-none focus:border-[#CCFF00]">
-                                <?php endif; ?>
-                                <p class="text-[10px] font-mono text-[#333] mt-1"><?= htmlspecialchars($s['key']) ?></p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+    <form method="POST" action="/admin/settings" class="space-y-12">
+        <?php
+        $groupOrder = ['general', 'landing', 'about', 'services', 'contact'];
+        $groupLabels = [
+            'general' => 'GENERAL',
+            'landing' => 'LANDING PAGE',
+            'about' => 'ABOUT PAGE',
+            'services' => 'SERVICES PAGE',
+            'contact' => 'CONTACT PAGE',
+        ];
+        foreach ($groupOrder as $group):
+            if (empty($grouped[$group])) continue;
+        ?>
+            <div class="border border-[#333] p-6">
+                <h2 class="text-xs font-mono text-[#CCFF00] tracking-[.2em] uppercase mb-6">[ <?= $groupLabels[$group] ?? strtoupper($group) ?> ]</h2>
+                <div class="space-y-6">
+                    <?php foreach ($grouped[$group] as $setting): ?>
+                        <div>
+                            <label for="setting_<?= htmlspecialchars($setting['setting_key']) ?>" class="block text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mb-2">
+                                [ <?= htmlspecialchars(str_replace('_', ' ', $setting['setting_key'])) ?> ]
+                            </label>
+                            <?php if (strlen($setting['setting_value'] ?? '') > 100): ?>
+                                <textarea id="setting_<?= htmlspecialchars($setting['setting_key']) ?>"
+                                          name="settings[<?= htmlspecialchars($setting['setting_key']) ?>]"
+                                          rows="4"
+                                          class="w-full bg-transparent border border-[#333] px-4 py-3 text-white text-sm font-mono leading-relaxed outline-none focus:border-[#CCFF00] resize-vertical rounded-none"><?= htmlspecialchars($setting['setting_value'] ?? '') ?></textarea>
+                            <?php else: ?>
+                                <input type="text"
+                                       id="setting_<?= htmlspecialchars($setting['setting_key']) ?>"
+                                       name="settings[<?= htmlspecialchars($setting['setting_key']) ?>]"
+                                       value="<?= htmlspecialchars($setting['setting_value'] ?? '') ?>"
+                                       class="w-full bg-transparent border border-[#333] px-4 py-3 text-white text-sm font-mono outline-none focus:border-[#CCFF00] rounded-none">
+                            <?php endif; ?>
+                            <?php if (!empty($setting['description'])): ?>
+                                <p class="mt-1 text-[10px] font-mono text-[#333]"><?= htmlspecialchars($setting['description']) ?></p>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-            <?php endforeach; ?>
-
-            <div class="border-t border-[#333] pt-8">
-                <button type="submit"
-                        class="px-8 py-3 bg-[#CCFF00] text-[#0a0a0a] font-bold text-xs tracking-[.2em] uppercase font-mono hover:bg-white">
-                    [ SAVE ALL SETTINGS ]
-                </button>
             </div>
-        </form>
-    <?php endif; ?>
-</section>
+        <?php endforeach; ?>
+
+        <?php
+        // Render any remaining groups not in $groupOrder
+        foreach ($grouped as $group => $settings):
+            if (in_array($group, $groupOrder)) continue;
+        ?>
+            <div class="border border-[#333] p-6">
+                <h2 class="text-xs font-mono text-[#CCFF00] tracking-[.2em] uppercase mb-6">[ <?= htmlspecialchars(strtoupper($group)) ?> ]</h2>
+                <div class="space-y-6">
+                    <?php foreach ($settings as $setting): ?>
+                        <div>
+                            <label for="setting_<?= htmlspecialchars($setting['setting_key']) ?>" class="block text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mb-2">
+                                [ <?= htmlspecialchars(str_replace('_', ' ', $setting['setting_key'])) ?> ]
+                            </label>
+                            <?php if (strlen($setting['setting_value'] ?? '') > 100): ?>
+                                <textarea id="setting_<?= htmlspecialchars($setting['setting_key']) ?>"
+                                          name="settings[<?= htmlspecialchars($setting['setting_key']) ?>]"
+                                          rows="4"
+                                          class="w-full bg-transparent border border-[#333] px-4 py-3 text-white text-sm font-mono leading-relaxed outline-none focus:border-[#CCFF00] resize-vertical rounded-none"><?= htmlspecialchars($setting['setting_value'] ?? '') ?></textarea>
+                            <?php else: ?>
+                                <input type="text"
+                                       id="setting_<?= htmlspecialchars($setting['setting_key']) ?>"
+                                       name="settings[<?= htmlspecialchars($setting['setting_key']) ?>]"
+                                       value="<?= htmlspecialchars($setting['setting_value'] ?? '') ?>"
+                                       class="w-full bg-transparent border border-[#333] px-4 py-3 text-white text-sm font-mono outline-none focus:border-[#CCFF00] rounded-none">
+                            <?php endif; ?>
+                            <?php if (!empty($setting['description'])): ?>
+                                <p class="mt-1 text-[10px] font-mono text-[#333]"><?= htmlspecialchars($setting['description']) ?></p>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+
+        <div class="flex items-center gap-4 pt-4">
+            <button type="submit"
+                    class="px-8 py-3 bg-[#CCFF00] text-[#0a0a0a] font-bold text-xs tracking-[.2em] uppercase font-mono hover:bg-white rounded-none">
+                [ SAVE ]
+            </button>
+            <a href="/admin" class="px-8 py-3 border border-[#333] text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">[ CANCEL ]</a>
+        </div>
+    </form>
+</div>

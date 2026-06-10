@@ -1,0 +1,89 @@
+@startuml Nusa Data Indonesia (NDI) Architecture Diagram
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "JetBrains Mono"
+skinparam Linetype ortho
+
+package "Presentation Layer (Frontend)" {
+    [Tailwind CSS (via CDN)] as cdn
+    [Brutalist CSS & JS] as asset
+    [Public Pages Views\n(landing, about, services, contact)] as view_pub
+    [Public Article Views\n(index, show)] as view_art
+    [Admin Views\n(login, dashboard, article CRUD)] as view_admin
+}
+
+package "Routing & Control Layer" {
+    [Front Controller / Router\n(public/index.php)] as router
+    [PageController] as ctrl_page
+    [ArticlePublicController] as ctrl_art_pub
+    [AuthController] as ctrl_auth
+    [ArticleController (CMS)] as ctrl_art
+    [Other Admin Controllers\n(Contact, User, Settings, etc.)] as ctrl_admin_other
+}
+
+package "Helper Layer" {
+    [Visitor Helper] as help_visitor
+    [Uploader Helper] as help_uploader
+    [Mailer Helper] as help_mailer
+    [functions.php] as help_func
+}
+
+package "Model (Data Access) Layer" {
+    [User Model] as m_user
+    [Visitor Model] as m_visitor
+    [Contact Model] as m_contact
+    [Article Model] as m_article
+    [Database Connection\n(config/database.php)] as db_conn
+}
+
+package "Storage Layer" {
+    database "MySQL Database" as mysql {
+        [users]
+        [articles]
+        [contacts]
+        [visitors]
+        [pages]
+        [site_settings]
+        [services]
+        [team_members]
+    }
+    folder "Uploads Directory\n(public/uploads/articles/)" as uploads
+}
+
+' Relations
+cdn --> view_pub : styled by
+asset --> view_pub : animated by
+
+router --> ctrl_page : routes public pages
+router --> ctrl_art_pub : routes public articles
+router --> ctrl_auth : routes login/logout
+router --> ctrl_art : routes article CRUD
+router --> ctrl_admin_other : routes other admin requests
+
+ctrl_page ..> view_pub : includes & renders
+ctrl_art_pub ..> view_art : includes & renders
+ctrl_auth ..> view_admin : renders login view
+ctrl_art ..> view_admin : renders CRUD views
+ctrl_admin_other ..> view_admin : renders panel views
+
+router ..> help_visitor : tracking visits
+ctrl_art ..> help_uploader : image uploading
+ctrl_art_pub ..> help_mailer : contact notification
+
+help_visitor ..> m_visitor : saves stats
+help_uploader ..> uploads : stores files
+
+ctrl_page ..> db_conn : uses
+ctrl_art_pub ..> m_article : uses
+ctrl_auth ..> m_user : authenticates
+ctrl_art ..> m_article : updates
+ctrl_admin_other ..> m_contact : manages
+
+m_user ..> db_conn
+m_visitor ..> db_conn
+m_contact ..> db_conn
+m_article ..> db_conn
+
+db_conn --> mysql : executes prepared queries
+
+@endum

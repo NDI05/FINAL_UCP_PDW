@@ -1,65 +1,47 @@
-<section class="border-b border-[#333] px-6 lg:px-12 py-10">
-    <div class="flex items-center justify-between mb-8">
+<div class="max-w-6xl mx-auto px-6 lg:px-10 py-10">
+    <div class="flex items-center justify-between mb-10">
         <div>
-            <p class="text-xs font-mono text-[#666] tracking-[.3em] uppercase">[ SERVICES CMS ]</p>
-            <h1 class="text-xl sm:text-2xl font-bold text-white tracking-tight mt-2">Daftar <span class="text-[#CCFF00]">Layanan</span></h1>
+            <p class="text-[10px] font-mono text-[#666] tracking-[.3em] uppercase">[ CMS ]</p>
+            <h1 class="text-2xl lg:text-3xl font-bold text-white tracking-tight mt-1">SERVICES</h1>
         </div>
-        <a href="/admin/services/create" class="px-4 py-2 border border-[#CCFF00] text-xs font-mono text-[#CCFF00] hover:bg-[#CCFF00] hover:text-[#0a0a0a] transition-all no-underline">
-            [ + NEW SERVICE ]
-        </a>
+        <a href="/admin/services/create" class="px-5 py-2 bg-[#CCFF00] text-[#0a0a0a] text-[10px] font-mono font-bold tracking-[.2em] uppercase hover:bg-white no-underline">+ CREATE</a>
     </div>
 
-    <?php if (isset($_GET['status'])): ?>
-        <div class="border border-[#CCFF00] px-4 py-3 mb-8">
-            <p class="text-xs font-mono text-[#CCFF00] tracking-[.2em]">
-                [ SERVICE <?= strtoupper(htmlspecialchars($_GET['status'])) ?> SUCCESSFULLY ]
-            </p>
-        </div>
-    <?php endif; ?>
-
-    <?php if (empty($services)): ?>
-        <div class="border border-[#333] p-12 text-center">
-            <p class="text-xs font-mono text-[#666] tracking-[.2em] uppercase">[ NO SERVICES DEFINED ]</p>
-            <a href="/admin/services/create" class="inline-block mt-4 text-xs font-mono text-[#CCFF00] hover:underline">[ ADD FIRST SERVICE ]</a>
-        </div>
-    <?php else: ?>
-        <div class="border border-[#333] overflow-x-auto">
-            <table class="w-full text-left border-collapse text-xs font-mono">
-                <thead>
-                    <tr class="border-b border-[#333] bg-[#0c0c0c] text-[#666] uppercase tracking-[.1em]">
-                        <th class="p-4 w-16 text-center">ORDER</th>
-                        <th class="p-4 w-24">IMAGE</th>
-                        <th class="p-4">TITLE</th>
-                        <th class="p-4 w-24 text-center">ACTIONS</th>
+    <div class="border border-[#333] overflow-x-auto">
+        <table class="w-full text-left">
+            <thead>
+                <tr class="border-b border-[#333] bg-[#0a0a0a]">
+                    <th class="px-4 py-3 text-[10px] font-mono text-[#666] uppercase tracking-[.2em]">#</th>
+                    <th class="px-4 py-3 text-[10px] font-mono text-[#666] uppercase tracking-[.2em]">Title</th>
+                    <th class="px-4 py-3 text-[10px] font-mono text-[#666] uppercase tracking-[.2em] hidden sm:table-cell">Order</th>
+                    <th class="px-4 py-3 text-[10px] font-mono text-[#666] uppercase tracking-[.2em] text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($services)): ?>
+                    <tr>
+                        <td colspan="4" class="px-4 py-12 text-center text-[10px] font-mono text-[#333] uppercase tracking-[.2em]">No services yet</td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($services as $s): 
-                        $imgUrl = !empty($s['image']) ? (str_starts_with($s['image'], 'http') ? $s['image'] : '/' . $s['image']) : '';
-                    ?>
-                        <tr class="border-b border-[#333] hover:bg-[#111]/40 transition-all">
-                            <td class="p-4 text-center text-[#CCFF00] font-bold"><?= (int)$s['order_num'] ?></td>
-                            <td class="p-4">
-                                <?php if ($imgUrl): ?>
-                                    <img src="<?= htmlspecialchars($imgUrl) ?>" alt="Service Preview" class="h-10 w-16 object-cover border border-[#333]">
-                                <?php else: ?>
-                                    <span class="text-[#333]">[ NONE ]</span>
-                                <?php endif; ?>
+                <?php else: ?>
+                    <?php foreach ($services as $i => $service): ?>
+                        <tr class="<?= $i > 0 ? 'border-t border-[#333]' : '' ?> hover:bg-[#111]">
+                            <td class="px-4 py-3 text-xs font-mono text-[#666]"><?= (int)$service['id'] ?></td>
+                            <td class="px-4 py-3">
+                                <span class="text-xs font-display font-semibold text-white">
+                                    <?= htmlspecialchars($service['title']) ?>
+                                </span>
                             </td>
-                            <td class="p-4">
-                                <p class="text-white font-bold text-sm uppercase"><?= htmlspecialchars($s['title']) ?></p>
-                                <p class="text-[#666] text-[10px] mt-1 line-clamp-1 max-w-xl"><?= htmlspecialchars($s['description']) ?></p>
-                            </td>
-                            <td class="p-4 text-center">
-                                <div class="flex items-center justify-center gap-4">
-                                    <a href="/admin/services/edit?id=<?= $s['id'] ?>" class="text-[#CCFF00] hover:text-white transition-all no-underline">[ EDIT ]</a>
-                                    <a href="/admin/services/delete?id=<?= $s['id'] ?>" onclick="return confirm('Hapus layanan ini?');" class="text-red-500 hover:text-white transition-all no-underline">[ DELETE ]</a>
+                            <td class="px-4 py-3 text-xs font-mono text-[#666] hidden sm:table-cell"><?= (int)$service['order_num'] ?></td>
+                            <td class="px-4 py-3 text-right">
+                                <div class="flex items-center justify-end gap-3">
+                                    <a href="/admin/services/edit?id=<?= (int)$service['id'] ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline">[ EDIT ]</a>
+                                    <a href="/admin/services/delete?id=<?= (int)$service['id'] ?>" class="text-[10px] font-mono text-[#666] hover:text-red-400 no-underline" onclick="return confirm('Delete this service?')">[ DELETE ]</a>
                                 </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-    <?php endif; ?>
-</section>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

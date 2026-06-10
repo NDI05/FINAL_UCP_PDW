@@ -1,0 +1,109 @@
+@startuml Nusa Data Indonesia (NDI) Sequence Diagram
+autonumber
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "JetBrains Mono"
+
+actor "User / Admin" as user
+boundary "Browser / Client" as client
+control "Router (public/index.php)" as router
+control "Controllers" as ctrl
+entity "Models" as model
+entity "Helpers" as helper
+database "Database (MySQL)" as db
+control "Filesystem" as fs
+
+== Scenario 1: Visitor Requesting a Page (e.g. /about) ==
+user -> client : Access http://ndi.com/about
+client -> router : HTTP GET /about
+activate router
+
+router -> helper : trackVisitor()
+activate helper
+helper -> model : Visitor::record($ip, $ua, $page)
+activate model
+
+model -> db : INSERT INTO visitors
+model -> db : INSERT INTO pages ... ON DUPLICATE KEY UPDATE visits = visits + 1
+deactivate model
+deactivate helper
+
+router -> ctrl : PageController->render('about')
+activate ctrl
+ctrl -> fs : include(views/about.php)
+fs --> ctrl : view template
+ctrl --> router : HTML output
+deactivate ctrl
+
+router --> client : HTTP 200 OK (HTML)
+deactivate router
+client --> user : Display page
+
+== Scenario 2: Visitor Submitting Contact Form ==
+user -> client : Submits Contact Form
+client -> router : HTTP POST /contact (name, email, subject, message)
+activate router
+
+router -> model : Contact::create($data)
+activate model
+model -> db : INSERT INTO contacts (prepared statement)
+db --> model : success
+deactivate model
+
+router --> client : HTTP 302 Redirect to /contact?status=success
+deactivate router
+client --> user : Show Success Notification
+
+== Scenario 3: Admin Authentication ==
+user -> client : Submits Login Form (username, password)
+client -> router : HTTP POST /admin/login
+activate router
+
+router -> ctrl : AuthController->login()
+activate ctrl
+ctrl -> model : User::findByUsername($username)
+activate model
+model -> db : SELECT * FROM users WHERE username = ?
+db --> model : user record
+deactivate model
+
+ctrl -> ctrl : password_verify($password, hash)
+alt Success
+    ctrl -> router : session_start() & set $_SESSION details
+    ctrl --> client : HTTP 302 Redirect to /admin
+else Failure
+    ctrl -> fs : include(views/admin/login.php with $error)
+    fs --> ctrl : login view
+    ctrl --> client : HTTP 200 OK (Render error message)
+end
+deactivate ctrl
+deactivate router
+
+== Scenario 4: Admin Publishing an Article ==
+user -> client : Submits New Article Form (title, content, file:image)
+client -> router : HTTP POST /admin/articles/create
+activate router
+
+router -> ctrl : ArticleController->handle('/admin/articles/create')
+activate ctrl
+ctrl -> ctrl : requireAuth() check
+
+ctrl -> helper : Uploader::upload($_FILES['image'])
+activate helper
+helper -> fs : check extension, MIME type, max 2MB
+helper -> fs : mkdir(uploads/articles/YYYY/MM) & move_uploaded_file()
+fs --> helper : unique file path
+helper --> ctrl : filepath or error
+deactivate helper
+
+ctrl -> model : Article::create($data)
+activate model
+model -> db : INSERT INTO articles (title, content, image, author_id, status)
+db --> model : success
+deactivate model
+
+ctrl --> client : HTTP 302 Redirect to /admin/articles
+deactivate ctrl
+deactivate router
+
+@endum

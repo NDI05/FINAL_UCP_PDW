@@ -1,0 +1,105 @@
+@startuml Nusa Data Indonesia (NDI) Activity Diagram
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "JetBrains Mono"
+
+partition "Activity 1: Request Routing & Visitor Tracking" {
+    (*) --> "Visitor Enters URL"
+    --> "Router parses REQUEST_URI"
+    --> "Call trackVisitor() middleware"
+    
+    note right
+        1. Get IP & User Agent
+        2. Insert into visitors table
+        3. Upsert pages table (slug, title) & visits + 1
+    end note
+    
+    if "URI Type" then
+        --> [Admin Route (/admin/*)] "Check Admin Session"
+    else
+        --> [Contact POST (/contact)] "Validate Contact Post Data"
+        if "Inputs Valid?" then
+            --> [Yes] "Save to contacts Table"
+            --> "Redirect to /contact?status=success"
+            --> (*)
+        else
+            --> [No] "Redirect to /contact?status=error"
+            --> (*)
+        endif
+    else
+        --> [Article Detail (/articles/{slug})] "Fetch Article by Slug"
+        if "Article Exists & Published?" then
+            --> [Yes] "Render Article Detail View"
+            --> (*)
+        else
+            --> [No] "Render 404 Page"
+            --> (*)
+        endif
+    else
+        --> [Public Page (/, /about, etc.)] "Render Page via PageController"
+        --> (*)
+    endif
+}
+
+partition "Activity 2: Admin Session Authentication" {
+    "Check Admin Session" --> if "Session user_id set?" then
+        --> [Yes] "Proceed to Admin Sub-Controller"
+        --> (*)
+    else
+        --> [No] if "Requesting /admin/login?" then
+            --> [Yes] if "Request Method is POST?" then
+                --> [Yes] "Retrieve username & password"
+                --> "Query user from database"
+                if "User exists & password matches?" then
+                    --> [Yes] "Set $_SESSION variables\n(user_id, username, role)"
+                    --> "Regenerate Session ID"
+                    --> "Redirect to /admin dashboard"
+                    --> (*)
+                else
+                    --> [No] "Set invalid credentials error"
+                    --> "Render Admin Login View"
+                    --> (*)
+                endif
+            else
+                --> [No (GET)] "Render Admin Login View"
+                --> (*)
+            endif
+        else
+            --> [No (Other /admin/* page)] "Redirect to /admin/login"
+            --> (*)
+        endif
+    endif
+}
+
+partition "Activity 3: Article Creation & Upload Workflow" {
+    "Proceed to Admin Sub-Controller" --> [Create Article Request] "Submit Article Form with Image File"
+    --> "Validate Text Fields (title, content)"
+    if "Is Image Uploaded?" then
+        --> [Yes] "Verify file size (<= 2MB)"
+        if "Size OK?" then
+            --> [Yes] "Verify File Extension & MIME\n(jpg, png, gif, webp)"
+            if "Format OK?" then
+                --> [Yes] "Generate unique name\n{timestamp}_{random6}.{ext}"
+                --> "Create target directory if needed\npublic/uploads/articles/{YYYY}/{MM}/"
+                --> "Move file to target path"
+                --> "Insert article record to DB\nwith image path (Prepared Statement)"
+                --> "Redirect to /admin/articles"
+                --> (*)
+            else
+                --> [No] "Set file format error"
+                --> "Render Create Form with Error"
+                --> (*)
+            endif
+        else
+            --> [No] "Set file size error"
+            --> "Render Create Form with Error"
+            --> (*)
+        endif
+    else
+        --> [No] "Insert article record to DB\nwith NULL image path"
+        --> "Redirect to /admin/articles"
+        --> (*)
+    endif
+}
+
+@endum

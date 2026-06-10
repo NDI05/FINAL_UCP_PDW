@@ -1,0 +1,87 @@
+@startuml Nusa Data Indonesia (NDI) ERD
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "JetBrains Mono"
+skinparam Linetype ortho
+
+entity "users" {
+    * id : INT <<PK>> [AI]
+    --
+    * username : VARCHAR(50) <<UNIQUE>>
+    * email : VARCHAR(100) <<UNIQUE>>
+    * password : VARCHAR(255)
+    * role : ENUM('admin', 'editor')
+    * created_at : TIMESTAMP
+}
+
+entity "articles" {
+    * id : INT <<PK>> [AI]
+    --
+    * title : VARCHAR(255)
+    * slug : VARCHAR(255) <<UNIQUE>>
+    * content : TEXT
+    image : VARCHAR(255)
+    author_id : INT <<FK>>
+    * status : ENUM('draft', 'published', 'archived')
+    * created_at : TIMESTAMP
+    * updated_at : TIMESTAMP
+}
+
+entity "pages" {
+    * id : INT <<PK>> [AI]
+    --
+    * slug : VARCHAR(100) <<UNIQUE>>
+    * title : VARCHAR(255)
+    visits : INT
+}
+
+entity "visitors" {
+    * id : INT <<PK>> [AI]
+    --
+    * ip_address : VARCHAR(45)
+    user_agent : TEXT
+    * page : VARCHAR(255)
+    * visited_at : TIMESTAMP
+}
+
+entity "contacts" {
+    * id : INT <<PK>> [AI]
+    --
+    * name : VARCHAR(100)
+    * email : VARCHAR(100)
+    * subject : VARCHAR(255)
+    * message : TEXT
+    * created_at : TIMESTAMP
+}
+
+entity "site_settings" {
+    * key : VARCHAR(100) <<PK>>
+    --
+    value : TEXT
+    * label : VARCHAR(255)
+    * group : VARCHAR(50)
+    * updated_at : TIMESTAMP
+}
+
+entity "services" {
+    * id : INT <<PK>> [AI]
+    --
+    * title : VARCHAR(255)
+    * description : TEXT
+    image : VARCHAR(255)
+    order_num : INT
+    * created_at : TIMESTAMP
+}
+
+entity "team_members" {
+    * id : INT <<PK>> [AI]
+    --
+    * name : VARCHAR(255)
+    * role : VARCHAR(255)
+    image : VARCHAR(255)
+    order_num : INT
+    * created_at : TIMESTAMP
+}
+
+users ||--o{ articles : "creates / writes"
+@endum

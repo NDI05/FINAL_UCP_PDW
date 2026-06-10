@@ -1,59 +1,100 @@
-<section class="border-b border-[#333] px-6 lg:px-12 py-10 lg:py-14">
-    <p class="text-xs font-mono text-[#666] tracking-[.3em] uppercase" data-scroll-reveal>[ DASHBOARD ]</p>
-    <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight mt-2" data-scroll-reveal>WELCOME, <span class="text-[#CCFF00]"><?= htmlspecialchars($_SESSION['username'] ?? 'ADMIN') ?></span></h1>
-</section>
-
 <?php
-require_once __DIR__ . '/../../models/Visitor.php';
-$todayVisitors = Visitor::getTodayCount();
-$totalVisitors = Visitor::getTotalCount();
-$topPages = Visitor::getTopPages(5);
-$recentVisitors = Visitor::getRecent(10);
+// Dashboard data
+$totalArticles = Article::count();
+$publishedArticles = Article::countByStatus('published');
+$totalContacts = Contact::count();
+
+// Visitors today — raw query
+$db = getDB();
+$visitorResult = $db->query("SELECT COUNT(*) AS cnt FROM visitors WHERE DATE(visited_at) = CURDATE()");
+$visitorsToday = (int)($visitorResult->fetch_assoc()['cnt'] ?? 0);
+
+// Recent data
+$recentArticles = Article::getAll(1, 5);
+$recentContacts = Contact::getAll(1, 5);
+
+$pageTitle = 'Dashboard';
 ?>
 
-<section class="border-b border-[#333] px-6 lg:px-12 py-10">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="border border-[#333] p-6"><p class="text-[10px] font-mono text-[#666] tracking-[.2em] uppercase">[ TODAY ]</p><p class="text-3xl font-bold text-[#CCFF00] mt-2"><?= $todayVisitors ?></p><p class="text-[10px] font-mono text-[#666] mt-1">VISITORS</p></div>
-        <div class="border border-[#333] p-6"><p class="text-[10px] font-mono text-[#666] tracking-[.2em] uppercase">[ TOTAL ]</p><p class="text-3xl font-bold text-[#CCFF00] mt-2"><?= $totalVisitors ?></p><p class="text-[10px] font-mono text-[#666] mt-1">ALL TIME</p></div>
-        <div class="border border-[#333] p-6"><p class="text-[10px] font-mono text-[#666] tracking-[.2em] uppercase">[ ARTICLES ]</p><p class="text-3xl font-bold text-[#CCFF00] mt-2"><?= Article::count() ?></p><p class="text-[10px] font-mono text-[#666] mt-1">TOTAL</p></div>
-        <div class="border border-[#333] p-6"><p class="text-[10px] font-mono text-[#666] tracking-[.2em] uppercase">[ PUBLISHED ]</p><p class="text-3xl font-bold text-[#CCFF00] mt-2"><?= Article::countByStatus('published') ?></p><p class="text-[10px] font-mono text-[#666] mt-1">ARTICLES</p></div>
+<div class="max-w-6xl mx-auto px-6 lg:px-10 py-10">
+    <div class="mb-10">
+        <p class="text-[10px] font-mono text-[#666] tracking-[.3em] uppercase">[ ADMIN ]</p>
+        <h1 class="text-2xl lg:text-3xl font-bold text-white tracking-tight mt-1">DASHBOARD</h1>
     </div>
-</section>
 
-<section class="border-b border-[#333] px-6 lg:px-12 py-10">
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+        <div class="bg-[#111] border border-[#333] p-5">
+            <p class="text-3xl lg:text-4xl font-bold text-[#CCFF00] font-mono"><?= $totalArticles ?></p>
+            <p class="text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mt-2">Total Articles</p>
+        </div>
+        <div class="bg-[#111] border border-[#333] p-5">
+            <p class="text-3xl lg:text-4xl font-bold text-[#CCFF00] font-mono"><?= $publishedArticles ?></p>
+            <p class="text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mt-2">Published</p>
+        </div>
+        <div class="bg-[#111] border border-[#333] p-5">
+            <p class="text-3xl lg:text-4xl font-bold text-[#CCFF00] font-mono"><?= $totalContacts ?></p>
+            <p class="text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mt-2">Total Contacts</p>
+        </div>
+        <div class="bg-[#111] border border-[#333] p-5">
+            <p class="text-3xl lg:text-4xl font-bold text-[#CCFF00] font-mono"><?= $visitorsToday ?></p>
+            <p class="text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mt-2">Visitors Today</p>
+        </div>
+    </div>
+
+    <!-- Recent Articles & Contacts -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Recent Articles -->
         <div>
-            <p class="text-xs font-mono text-[#666] tracking-[.3em] uppercase mb-4" data-scroll-reveal>[ TOP PAGES ]</p>
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xs font-mono text-[#666] tracking-[.2em] uppercase">[ Recent Articles ]</h2>
+                <a href="/admin/articles" class="text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">VIEW ALL →</a>
+            </div>
             <div class="border border-[#333]">
-                <?php if (empty($topPages)): ?>
-                    <p class="p-4 text-xs font-mono text-[#333]">No data yet.</p>
+                <?php if (empty($recentArticles)): ?>
+                    <div class="px-4 py-8 text-center text-[10px] font-mono text-[#333] uppercase tracking-[.2em]">No articles yet</div>
                 <?php else: ?>
-                    <?php $i = 1; foreach ($topPages as $p): ?>
-                        <div class="flex items-center justify-between px-4 py-3 border-b border-[#333] last:border-b-0">
-                            <div class="flex items-center gap-3"><span class="text-[10px] font-mono text-[#333]"><?= str_pad($i, 2, '0', STR_PAD_LEFT) ?></span><span class="text-xs font-mono text-[#999]">/<?= htmlspecialchars($p['page'] === '/' ? 'home' : ltrim($p['page'], '/')) ?></span></div>
-                            <span class="text-xs font-mono text-[#CCFF00]"><?= (int)$p['visits'] ?></span>
+                    <?php foreach ($recentArticles as $i => $article): ?>
+                        <div class="<?= $i > 0 ? 'border-t border-[#333]' : '' ?> px-4 py-3 hover:bg-[#111]">
+                            <div class="flex items-center justify-between">
+                                <div class="min-w-0 flex-1">
+                                    <p class="text-xs font-display font-semibold text-white truncate"><?= htmlspecialchars($article['title']) ?></p>
+                                    <p class="text-[10px] font-mono text-[#333] mt-1"><?= date('d/m/y', strtotime($article['created_at'])) ?></p>
+                                </div>
+                                <?php $status = $article['status']; ?>
+                                <span class="text-[10px] font-mono <?= $status === 'published' ? 'text-[#CCFF00]' : ($status === 'archived' ? 'text-[#666]' : 'text-white/60') ?> ml-3 flex-shrink-0">
+                                    [ <?= strtoupper(htmlspecialchars($status)) ?> ]
+                                </span>
+                            </div>
                         </div>
-                    <?php $i++; endforeach; ?>
+                    <?php endforeach; ?>
                 <?php endif; ?>
             </div>
         </div>
+
+        <!-- Recent Contacts -->
         <div>
-            <p class="text-xs font-mono text-[#666] tracking-[.3em] uppercase mb-4" data-scroll-reveal>[ RECENT VISITORS ]</p>
-            <div class="border border-[#333] max-h-80 overflow-y-auto">
-                <?php if (empty($recentVisitors)): ?>
-                    <p class="p-4 text-xs font-mono text-[#333]">No data yet.</p>
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xs font-mono text-[#666] tracking-[.2em] uppercase">[ Recent Contacts ]</h2>
+                <a href="/admin/contacts" class="text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">VIEW ALL →</a>
+            </div>
+            <div class="border border-[#333]">
+                <?php if (empty($recentContacts)): ?>
+                    <div class="px-4 py-8 text-center text-[10px] font-mono text-[#333] uppercase tracking-[.2em]">No contacts yet</div>
                 <?php else: ?>
-                    <?php foreach ($recentVisitors as $v): ?>
-                        <div class="px-4 py-2.5 border-b border-[#333] last:border-b-0">
+                    <?php foreach ($recentContacts as $i => $contact): ?>
+                        <div class="<?= $i > 0 ? 'border-t border-[#333]' : '' ?> px-4 py-3 hover:bg-[#111]">
                             <div class="flex items-center justify-between">
-                                <span class="text-[10px] font-mono text-[#666]"><?= htmlspecialchars($v['ip_address']) ?></span>
-                                <span class="text-[10px] font-mono text-[#333]"><?= date('H:i', strtotime($v['visited_at'])) ?></span>
+                                <div class="min-w-0 flex-1">
+                                    <p class="text-xs font-display font-semibold text-white truncate"><?= htmlspecialchars($contact['name']) ?></p>
+                                    <p class="text-[10px] font-mono text-[#666] truncate mt-0.5"><?= htmlspecialchars($contact['email']) ?></p>
+                                    <p class="text-[10px] font-mono text-[#333] mt-1"><?= htmlspecialchars($contact['subject'] ?? '') ?> · <?= date('d/m/y', strtotime($contact['created_at'])) ?></p>
+                                </div>
                             </div>
-                            <p class="text-[10px] font-mono text-[#999] mt-0.5">/<?= htmlspecialchars($v['page'] === '/' ? 'home' : ltrim($v['page'], '/')) ?></p>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
         </div>
     </div>
-</section>
+</div>

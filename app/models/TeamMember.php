@@ -3,10 +3,22 @@ require_once __DIR__ . '/../../config/database.php';
 
 class TeamMember
 {
-    public static function getAll(): array
+    public static function getAll(int $page = 1, int $perPage = 10): array
     {
         $db = getDB();
-        $result = $db->query('SELECT * FROM team_members ORDER BY order_num ASC, id ASC');
+        $offset = ($page - 1) * $perPage;
+        $stmt = $db->prepare(
+            'SELECT * FROM team_members ORDER BY created_at DESC LIMIT ? OFFSET ?'
+        );
+        $stmt->bind_param('ii', $perPage, $offset);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public static function getAllOrdered(): array
+    {
+        $db = getDB();
+        $result = $db->query('SELECT * FROM team_members ORDER BY order_num ASC');
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -16,14 +28,21 @@ class TeamMember
         $stmt = $db->prepare('SELECT * FROM team_members WHERE id = ? LIMIT 1');
         $stmt->bind_param('i', $id);
         $stmt->execute();
-        return $stmt->get_result()->fetch_assoc() ?: null;
+        $result = $stmt->get_result();
+        return $result->fetch_assoc() ?: null;
     }
 
     public static function create(array $data): int
     {
         $db = getDB();
-        $stmt = $db->prepare('INSERT INTO team_members (name, role, image, order_num) VALUES (?, ?, ?, ?)');
-        $stmt->bind_param('sssi', $data['name'], $data['role'], $data['image'], $data['order_num']);
+        $stmt = $db->prepare(
+            'INSERT INTO team_members (name, role, image, order_num) VALUES (?, ?, ?, ?)'
+        );
+        $name = $data['name'] ?? '';
+        $role = $data['role'] ?? '';
+        $image = $data['image'] ?? null;
+        $orderNum = (int)($data['order_num'] ?? 0);
+        $stmt->bind_param('sssi', $name, $role, $image, $orderNum);
         $stmt->execute();
         return $stmt->insert_id;
     }
@@ -39,15 +58,15 @@ class TeamMember
         foreach ($allowed as $field) {
             if (array_key_exists($field, $data)) {
                 $fields[] = "$field = ?";
-                if ($field === 'order_num') {
-                    $types .= 'i';
-                } else {
-                    $types .= 's';
-                }
+                $types .= ($field === 'order_num') ? 'i' : 's';
                 $values[] = $data[$field];
             }
         }
-        if (empty($fields)) return false;
+
+        if (empty($fields)) {
+            return false;
+        }
+
         $types .= 'i';
         $values[] = $id;
 

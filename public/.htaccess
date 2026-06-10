@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Jika file atau direktori yang diminta benar-benar ada, serve langsung
+# (untuk CSS, JS, gambar, uploads, dll)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Selain itu, arahkan semua request ke index.php
+RewriteRule ^(.*)$ index.php [QSA,L]

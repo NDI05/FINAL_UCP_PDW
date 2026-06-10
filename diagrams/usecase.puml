@@ -1,0 +1,71 @@
+@startuml Nusa Data Indonesia (NDI) Use Case Diagram
+left to right direction
+skinparam packageStyle rectangle
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "JetBrains Mono"
+
+actor "Public Visitor" as visitor
+actor "Administrator" as admin
+actor "Editor" as editor
+actor "System" as system
+
+rectangle "Nusa Data Indonesia (NDI) Portal & CMS" {
+    package "Public Features" {
+        usecase "View Landing Page" as UC_landing
+        usecase "View About Page" as UC_about
+        usecase "View Services Page" as UC_services
+        usecase "View Contact Page" as UC_contact
+        usecase "Submit Contact Form" as UC_submit_contact
+        usecase "View Articles Grid" as UC_articles
+        usecase "View Article Details" as UC_article_detail
+    }
+
+    package "Admin & CMS Features" {
+        usecase "Login / Logout" as UC_auth
+        usecase "View Dashboard Stats" as UC_dashboard
+        usecase "Manage Articles (CRUD)" as UC_manage_articles
+        usecase "Upload Article Image" as UC_upload_image
+        usecase "Manage Services (CRUD)" as UC_manage_services
+        usecase "Manage Team Members (CRUD)" as UC_manage_team
+        usecase "Edit Site Settings" as UC_edit_settings
+        usecase "View Contact Messages" as UC_view_contacts
+        usecase "Manage Users (CRUD)" as UC_manage_users
+    }
+
+    package "System Middleware" {
+        usecase "Track Visitor Stats" as UC_track_visitor
+    }
+}
+
+visitor --> UC_landing
+visitor --> UC_about
+visitor --> UC_services
+visitor --> UC_contact
+visitor --> UC_submit_contact
+visitor --> UC_articles
+visitor --> UC_article_detail
+
+editor --> UC_auth
+editor --> UC_dashboard
+editor --> UC_manage_articles
+UC_manage_articles ..> UC_upload_image : <<include>>
+
+admin --> editor
+admin --> UC_manage_services
+admin --> UC_manage_team
+admin --> UC_edit_settings
+admin --> UC_view_contacts
+admin --> UC_manage_users
+
+UC_landing ..> UC_track_visitor : <<include>>
+UC_about ..> UC_track_visitor : <<include>>
+UC_services ..> UC_track_visitor : <<include>>
+UC_contact ..> UC_track_visitor : <<include>>
+UC_articles ..> UC_track_visitor : <<include>>
+UC_article_detail ..> UC_track_visitor : <<include>>
+UC_dashboard ..> UC_track_visitor : <<include>>
+
+UC_track_visitor --> system
+
+@endum

@@ -31,6 +31,20 @@ class ArticleController
         return trim($slug, '-') ?: 'untitled';
     }
 
+    public function handle(string $uri): void
+    {
+        $path = str_replace('/admin/articles', '', $uri);
+        $path = rtrim($path, '/') ?: '/';
+
+        match(true) {
+            $path === '/create' => $this->create(),
+            $path === '/edit' => $this->edit(),
+            $path === '/delete' => $this->delete(),
+            $path === '/show' => $this->show(),
+            default => $this->index(),
+        };
+    }
+
     public function index(): void
     {
         $page = max(1, (int)($_GET['page'] ?? 1));
