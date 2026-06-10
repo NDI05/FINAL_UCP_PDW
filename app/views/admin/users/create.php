@@ -10,7 +10,7 @@
         </div>
     <?php endif; ?>
 
-    <form method="POST" action="/admin/users/create" class="space-y-8">
+    <form method="POST" action="<?= baseUrl('/admin/users/create') ?>" class="space-y-8">
         <div>
             <label for="username" class="block text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mb-2">[ USERNAME ]</label>
             <input type="text" id="username" name="username" required
@@ -45,7 +45,7 @@
                     class="px-8 py-3 bg-[#CCFF00] text-[#0a0a0a] font-bold text-xs tracking-[.2em] uppercase font-mono hover:bg-white rounded-none">
                 CREATE
             </button>
-            <a href="/admin/users" class="px-8 py-3 border border-[#333] text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">[ CANCEL ]</a>
+            <a href="<?= baseUrl('/admin/users') ?>" class="px-8 py-3 border border-[#333] text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">[ CANCEL ]</a>
         </div>
     </form>
 </div>

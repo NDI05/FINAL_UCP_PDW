@@ -34,7 +34,7 @@ class ArticlePublicController
         if (!$article) {
             http_response_code(404);
             $this->render('partials/header', ['pageTitle' => 'Article Not Found']);
-            echo '<section class="min-h-screen flex items-center justify-center px-6"><div class="text-center"><p class="text-xs font-mono text-[#666] tracking-[.3em] uppercase">[ 404 ]</p><p class="text-sm font-mono text-[#333] mt-4">Article not found.</p><a href="/articles" class="inline-block mt-6 text-xs font-mono text-[#CCFF00] tracking-[.2em] uppercase hover:text-white no-underline">[ BACK TO ARTICLES ]</a></div></section>';
+            echo '<section class="min-h-screen flex items-center justify-center px-6"><div class="text-center"><p class="text-xs font-mono text-[#666] tracking-[.3em] uppercase">[ 404 ]</p><p class="text-sm font-mono text-[#333] mt-4">Article not found.</p><a href="<?= baseUrl('/articles') ?>" class="inline-block mt-6 text-xs font-mono text-[#CCFF00] tracking-[.2em] uppercase hover:text-white no-underline">[ BACK TO ARTICLES ]</a></div></section>';
             $this->render('partials/footer');
             exit;
         }

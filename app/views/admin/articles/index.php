@@ -4,13 +4,13 @@
             <p class="text-xs font-mono text-[#666] tracking-[.3em] uppercase">[ ARTICLES ]</p>
             <h1 class="text-xl sm:text-2xl font-bold text-white tracking-tight mt-2">MANAGE <span class="text-[#CCFF00]">ARTICLES</span></h1>
         </div>
-        <a href="/admin/articles/create" class="px-5 py-2.5 bg-[#CCFF00] text-[#0a0a0a] font-bold text-xs tracking-[.2em] uppercase font-mono hover:bg-white no-underline">+ NEW</a>
+        <a href="<?= baseUrl('/admin/articles/create') ?>" class="px-5 py-2.5 bg-[#CCFF00] text-[#0a0a0a] font-bold text-xs tracking-[.2em] uppercase font-mono hover:bg-white no-underline">+ NEW</a>
     </div>
 
     <?php if (empty($articles)): ?>
         <div class="border border-[#333] p-10 text-center">
             <p class="text-xs font-mono text-[#333] tracking-[.2em] uppercase">[ NO ARTICLES YET ]</p>
-            <a href="/admin/articles/create" class="inline-block mt-4 text-xs font-mono text-[#CCFF00] tracking-[.2em] uppercase hover:text-white no-underline">CREATE THE FIRST ONE</a>
+            <a href="<?= baseUrl('/admin/articles/create') ?>" class="inline-block mt-4 text-xs font-mono text-[#CCFF00] tracking-[.2em] uppercase hover:text-white no-underline">CREATE THE FIRST ONE</a>
         </div>
     <?php else: ?>
         <div class="border border-[#333] overflow-x-auto">
@@ -35,9 +35,9 @@
                             <td class="px-4 py-3 text-[#333] hidden md:table-cell"><?= date('Y-m-d', strtotime($a['created_at'])) ?></td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center gap-3">
-                                    <a href="/admin/articles/show?id=<?= $a['id'] ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline">[ VIEW ]</a>
-                                    <a href="/admin/articles/edit?id=<?= $a['id'] ?>" class="text-[10px] font-mono text-[#CCFF00] hover:text-white no-underline">[ EDIT ]</a>
-                                    <a href="/admin/articles/delete?id=<?= $a['id'] ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline" onclick="return confirm('Delete this article?')">[ DELETE ]</a>
+                                    <a href="<?= baseUrl('/admin/articles/show?id=' . $a['id']) ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline">[ VIEW ]</a>
+                                    <a href="<?= baseUrl('/admin/articles/edit?id=' . $a['id']) ?>" class="text-[10px] font-mono text-[#CCFF00] hover:text-white no-underline">[ EDIT ]</a>
+                                    <a href="<?= baseUrl('/admin/articles/delete?id=' . $a['id']) ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline" onclick="return confirm('Delete this article?')">[ DELETE ]</a>
                                 </div>
                             </td>
                         </tr>
@@ -49,7 +49,7 @@
         <?php if ($totalPages > 1): ?>
             <div class="flex items-center justify-center gap-3 mt-8">
                 <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                    <a href="/admin/articles?page=<?= $i ?>" class="px-3 py-1.5 text-xs font-mono border border-[#333] <?= $i === (int)($page) ? 'bg-[#CCFF00] text-[#0a0a0a] border-[#CCFF00]' : 'text-[#666] hover:text-white' ?> no-underline"><?= $i ?></a>
+                    <a href="<?= baseUrl('/admin/articles?page=' . $i) ?>" class="px-3 py-1.5 text-xs font-mono border border-[#333] <?= $i === (int)($page) ? 'bg-[#CCFF00] text-[#0a0a0a] border-[#CCFF00]' : 'text-[#666] hover:text-white' ?> no-underline"><?= $i ?></a>
                 <?php endfor; ?>
             </div>
         <?php endif; ?>

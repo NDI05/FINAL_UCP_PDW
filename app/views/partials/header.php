@@ -24,21 +24,21 @@
             }
         }
     </script>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="<?= baseUrl('/css/style.css') ?>">
 </head>
 <body class="bg-[#0a0a0a] text-white font-display selection:bg-[#CCFF00] selection:text-[#0a0a0a]">
 
 <header data-nav class="fixed top-0 left-0 right-0 z-50" style="background:transparent">
     <nav class="border-b border-[#333] flex items-center justify-between h-14 px-6 lg:px-12 bg-[#0a0a0a]/90 backdrop-blur-sm">
-        <a href="/" class="text-[#CCFF00] font-bold tracking-[.15em] text-sm font-mono no-underline">[ NDI ]</a>
+        <a href="<?= baseUrl('/') ?>" class="text-[#CCFF00] font-bold tracking-[.15em] text-sm font-mono no-underline">[ NDI ]</a>
 
         <!-- Desktop Nav (md+) -->
         <ul class="hidden md:flex items-center gap-6 lg:gap-10">
-            <li><a href="/" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/') ?> font-mono text-xs tracking-[.2em] uppercase no-underline">[ HOME ]</a></li>
-            <li><a href="/about" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/about') ?> font-mono text-xs tracking-[.2em] uppercase no-underline">[ ABOUT ]</a></li>
-            <li><a href="/services" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/services') ?> font-mono text-xs tracking-[.2em] uppercase no-underline">[ SERVICES ]</a></li>
-            <li><a href="/articles" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/articles') ?> font-mono text-xs tracking-[.2em] uppercase no-underline">[ ARTICLES ]</a></li>
-            <li><a href="/contact" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/contact') ?> font-mono text-xs tracking-[.2em] uppercase no-underline">[ CONTACT ]</a></li>
+            <li><a href="<?= baseUrl('/') ?>" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/') ?> font-mono text-xs tracking-[.2em] uppercase no-underline">[ HOME ]</a></li>
+            <li><a href="<?= baseUrl('/about') ?>" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/about') ?> font-mono text-xs tracking-[.2em] uppercase no-underline">[ ABOUT ]</a></li>
+            <li><a href="<?= baseUrl('/services') ?>" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/services') ?> font-mono text-xs tracking-[.2em] uppercase no-underline">[ SERVICES ]</a></li>
+            <li><a href="<?= baseUrl('/articles') ?>" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/articles') ?> font-mono text-xs tracking-[.2em] uppercase no-underline">[ ARTICLES ]</a></li>
+            <li><a href="<?= baseUrl('/contact') ?>" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/contact') ?> font-mono text-xs tracking-[.2em] uppercase no-underline">[ CONTACT ]</a></li>
         </ul>
 
         <!-- Hamburger Button (mobile only, <md) -->
@@ -57,11 +57,11 @@
     <!-- Mobile Menu Dropdown -->
     <div id="mobile-menu" class="md:hidden bg-[#0a0a0a] border-b border-[#333] overflow-hidden max-h-0 transition-all duration-300">
         <ul class="flex flex-col px-6 py-4 gap-0">
-            <li class="border-b border-[#222]"><a href="/" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/') ?> font-mono text-xs tracking-[.2em] uppercase no-underline block py-3">[ HOME ]</a></li>
-            <li class="border-b border-[#222]"><a href="/about" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/about') ?> font-mono text-xs tracking-[.2em] uppercase no-underline block py-3">[ ABOUT ]</a></li>
-            <li class="border-b border-[#222]"><a href="/services" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/services') ?> font-mono text-xs tracking-[.2em] uppercase no-underline block py-3">[ SERVICES ]</a></li>
-            <li class="border-b border-[#222]"><a href="/articles" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/articles') ?> font-mono text-xs tracking-[.2em] uppercase no-underline block py-3">[ ARTICLES ]</a></li>
-            <li><a href="/contact" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/contact') ?> font-mono text-xs tracking-[.2em] uppercase no-underline block py-3">[ CONTACT ]</a></li>
+            <li class="border-b border-[#222]"><a href="<?= baseUrl('/') ?>" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/') ?> font-mono text-xs tracking-[.2em] uppercase no-underline block py-3">[ HOME ]</a></li>
+            <li class="border-b border-[#222]"><a href="<?= baseUrl('/about') ?>" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/about') ?> font-mono text-xs tracking-[.2em] uppercase no-underline block py-3">[ ABOUT ]</a></li>
+            <li class="border-b border-[#222]"><a href="<?= baseUrl('/services') ?>" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/services') ?> font-mono text-xs tracking-[.2em] uppercase no-underline block py-3">[ SERVICES ]</a></li>
+            <li class="border-b border-[#222]"><a href="<?= baseUrl('/articles') ?>" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/articles') ?> font-mono text-xs tracking-[.2em] uppercase no-underline block py-3">[ ARTICLES ]</a></li>
+            <li><a href="<?= baseUrl('/contact') ?>" class="<?= currentNavClass($_SERVER['REQUEST_URI'], '/contact') ?> font-mono text-xs tracking-[.2em] uppercase no-underline block py-3">[ CONTACT ]</a></li>
         </ul>
     </div>
 </header>

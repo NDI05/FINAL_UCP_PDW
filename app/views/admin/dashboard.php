@@ -48,7 +48,7 @@ $pageTitle = 'Dashboard';
         <div>
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-xs font-mono text-[#666] tracking-[.2em] uppercase">[ Recent Articles ]</h2>
-                <a href="/admin/articles" class="text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">VIEW ALL →</a>
+                <a href="<?= baseUrl('/admin/articles') ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">VIEW ALL →</a>
             </div>
             <div class="border border-[#333]">
                 <?php if (empty($recentArticles)): ?>
@@ -76,7 +76,7 @@ $pageTitle = 'Dashboard';
         <div>
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-xs font-mono text-[#666] tracking-[.2em] uppercase">[ Recent Contacts ]</h2>
-                <a href="/admin/contacts" class="text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">VIEW ALL →</a>
+                <a href="<?= baseUrl('/admin/contacts') ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">VIEW ALL →</a>
             </div>
             <div class="border border-[#333]">
                 <?php if (empty($recentContacts)): ?>

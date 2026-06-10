@@ -18,7 +18,7 @@
                     <div>
                         <div data-parallax class="h-40 sm:h-48 lg:h-52 bg-[#111] overflow-hidden">
                             <?php if (!empty($a['image'])): ?>
-                                <img src="/<?= htmlspecialchars($a['image']) ?>" alt="<?= htmlspecialchars($a['title']) ?>" class="w-full h-full object-cover grayscale opacity-80" loading="lazy">
+                                <img src="<?= baseUrl('/' . htmlspecialchars($a['image'])) ?>" alt="<?= htmlspecialchars($a['title']) ?>" class="w-full h-full object-cover grayscale opacity-80" loading="lazy">
                             <?php else: ?>
                                 <div class="w-full h-full flex items-center justify-center"><span class="text-[10px] font-mono text-[#333]">[ NO IMAGE ]</span></div>
                             <?php endif; ?>
@@ -27,7 +27,7 @@
                             <span class="text-[10px] font-mono text-[#666]"><?= date('Y.m.d', strtotime($a['created_at'])) ?></span>
                             <p class="text-xs font-mono uppercase tracking-[.2em] text-white mt-1.5 leading-relaxed"><?= htmlspecialchars($a['title']) ?></p>
                             <p class="text-[10px] font-mono text-[#666] mt-2 leading-relaxed line-clamp-2"><?= htmlspecialchars(substr(strip_tags($a['content']), 0, 120)) ?>...</p>
-                            <a href="/articles/<?= htmlspecialchars($a['slug']) ?>" class="inline-block mt-3 text-[10px] font-mono text-[#CCFF00] tracking-[.2em] uppercase hover:text-white no-underline">[ READ ]</a>
+                            <a href="<?= baseUrl('/articles/' . htmlspecialchars($a['slug'])) ?>" class="inline-block mt-3 text-[10px] font-mono text-[#CCFF00] tracking-[.2em] uppercase hover:text-white no-underline">[ READ ]</a>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -36,7 +36,7 @@
             <?php if ($totalPages > 1): ?>
                 <div class="flex items-center justify-center gap-3 mt-10">
                     <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                        <a href="/articles?page=<?= $i ?>" class="px-3 py-1.5 text-xs font-mono border border-[#333] <?= $i === $page ? 'bg-[#CCFF00] text-[#0a0a0a] border-[#CCFF00]' : 'text-[#666] hover:text-white' ?> no-underline"><?= $i ?></a>
+                        <a href="<?= baseUrl('/articles?page=' . $i) ?>" class="px-3 py-1.5 text-xs font-mono border border-[#333] <?= $i === $page ? 'bg-[#CCFF00] text-[#0a0a0a] border-[#CCFF00]' : 'text-[#666] hover:text-white' ?> no-underline"><?= $i ?></a>
                     <?php endfor; ?>
                 </div>
             <?php endif; ?>

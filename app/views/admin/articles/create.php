@@ -1,5 +1,5 @@
 <section class="border-b border-[#333] px-6 lg:px-12 py-10 max-w-3xl">
-    <a href="/admin/articles" class="text-[10px] font-mono text-[#666] tracking-[.2em] uppercase hover:text-white no-underline mb-6 inline-block">[ BACK TO ARTICLES ]</a>
+    <a href="<?= baseUrl('/admin/articles') ?>" class="text-[10px] font-mono text-[#666] tracking-[.2em] uppercase hover:text-white no-underline mb-6 inline-block">[ BACK TO ARTICLES ]</a>
     <p class="text-xs font-mono text-[#666] tracking-[.3em] uppercase mt-4">[ ARTICLES ]</p>
     <h1 class="text-xl sm:text-2xl font-bold text-white tracking-tight mt-2">CREATE <span class="text-[#CCFF00]">ARTICLE</span></h1>
 
@@ -7,7 +7,7 @@
         <div class="border border-[#333] px-4 py-3 mt-6"><p class="text-xs font-mono text-[#666]"><?= htmlspecialchars($error) ?></p></div>
     <?php endif; ?>
 
-    <form method="POST" action="/admin/articles/create" enctype="multipart/form-data" class="mt-8 space-y-6">
+    <form method="POST" action="<?= baseUrl('/admin/articles/create') ?>" enctype="multipart/form-data" class="mt-8 space-y-6">
         <div>
             <label for="title" class="block text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mb-2">[ TITLE ]</label>
             <input type="text" id="title" name="title" required oninput="slugify(this.value)" class="w-full bg-transparent border border-[#333] px-4 py-3 text-white text-sm font-mono outline-none focus:border-[#CCFF00] no-underline">

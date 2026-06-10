@@ -80,14 +80,14 @@ if (!empty($latestArticles)):
 <section class="border-b border-[#333]" id="latest-articles">
     <div class="px-6 lg:px-12 py-5 border-b border-[#333] flex items-center justify-between">
         <h2 class="text-xs font-mono tracking-[.3em] uppercase text-[#666]">LATEST <span class="text-[#CCFF00]">INSIGHTS</span></h2>
-        <a href="/articles" class="text-[10px] font-mono text-[#CCFF00] tracking-[.2em] uppercase hover:text-white no-underline">[ ALL ARTICLES ]</a>
+        <a href="<?= baseUrl('/articles') ?>" class="text-[10px] font-mono text-[#CCFF00] tracking-[.2em] uppercase hover:text-white no-underline">[ ALL ARTICLES ]</a>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-border">
         <?php foreach ($latestArticles as $a): ?>
             <div>
                 <div data-parallax class="h-40 sm:h-48 lg:h-56 bg-[#111] overflow-hidden">
                     <?php if (!empty($a['image'])): ?>
-                        <img src="/<?= htmlspecialchars($a['image']) ?>" alt="<?= htmlspecialchars($a['title']) ?>" class="w-full h-full object-cover grayscale opacity-80" loading="lazy">
+                        <img src="<?= baseUrl('/' . htmlspecialchars($a['image'])) ?>" alt="<?= htmlspecialchars($a['title']) ?>" class="w-full h-full object-cover grayscale opacity-80" loading="lazy">
                     <?php else: ?>
                         <div class="w-full h-full flex items-center justify-center"><span class="text-[10px] font-mono text-[#333]">[ NO IMAGE ]</span></div>
                     <?php endif; ?>
@@ -96,7 +96,7 @@ if (!empty($latestArticles)):
                     <span class="text-[10px] font-mono text-[#666]"><?= date('Y.m.d', strtotime($a['created_at'])) ?></span>
                     <p class="text-xs font-mono uppercase tracking-[.2em] text-white mt-1.5 leading-relaxed"><?= htmlspecialchars($a['title']) ?></p>
                     <p class="text-[10px] font-mono text-[#666] mt-2 leading-relaxed line-clamp-2"><?= htmlspecialchars(substr(strip_tags($a['content']), 0, 120)) ?>...</p>
-                    <a href="/articles/<?= htmlspecialchars($a['slug']) ?>" class="inline-block mt-3 text-[10px] font-mono text-[#CCFF00] tracking-[.2em] uppercase hover:text-white no-underline">[ READ ]</a>
+                    <a href="<?= baseUrl('/articles/' . htmlspecialchars($a['slug'])) ?>" class="inline-block mt-3 text-[10px] font-mono text-[#CCFF00] tracking-[.2em] uppercase hover:text-white no-underline">[ READ ]</a>
                 </div>
             </div>
         <?php endforeach; ?>
@@ -118,5 +118,5 @@ if (!empty($latestArticles)):
 <!-- CTA -->
 <section class="border-b border-[#333] py-16 md:py-20 lg:py-24 text-center px-6">
     <p class="text-xs font-mono text-[#666] tracking-[.3em] uppercase mb-6" data-scroll-reveal>[ LET'S WORK TOGETHER ]</p>
-    <a href="/contact" class="inline-block px-10 py-3 bg-[#CCFF00] text-[#0a0a0a] font-bold text-sm tracking-[.2em] uppercase font-mono hover:bg-white no-underline" data-scroll-reveal>INITIATE PROJECT</a>
+    <a href="<?= baseUrl('/contact') ?>" class="inline-block px-10 py-3 bg-[#CCFF00] text-[#0a0a0a] font-bold text-sm tracking-[.2em] uppercase font-mono hover:bg-white no-underline" data-scroll-reveal>INITIATE PROJECT</a>
 </section>

@@ -8,7 +8,7 @@ class ArticleController
     private function requireAuth(): void
     {
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /admin/login');
+            header('Location: ' . baseUrl('/admin/login'));
             exit;
         }
     }
@@ -69,7 +69,7 @@ class ArticleController
                     'title' => $title, 'slug' => $slug, 'content' => $content,
                     'image' => $image, 'author_id' => $authorId, 'status' => $status,
                 ]);
-                header('Location: /admin/articles');
+                header('Location: ' . baseUrl('/admin/articles'));
                 exit;
             }
         }
@@ -112,7 +112,7 @@ class ArticleController
 
             if (empty($error)) {
                 Article::update($id, $data);
-                header('Location: /admin/articles');
+                header('Location: ' . baseUrl('/admin/articles'));
                 exit;
             }
         }
@@ -131,7 +131,7 @@ class ArticleController
             Uploader::delete($article['image'] ?? null);
             Article::delete($id);
         }
-        header('Location: /admin/articles');
+        header('Location: ' . baseUrl('/admin/articles'));
         exit;
     }
 

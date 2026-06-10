@@ -18,7 +18,16 @@ require_once __DIR__ . '/../app/models/Article.php';
 require_once __DIR__ . '/../app/models/Service.php';
 require_once __DIR__ . '/../app/models/TeamMember.php';
 
+$scriptName = $_SERVER['SCRIPT_NAME'];
+$baseDir = dirname($scriptName);
+if ($baseDir === '/' || $baseDir === '\\') $baseDir = '';
+else $baseDir = str_replace('\\', '/', $baseDir);
+define('BASE_URL', rtrim($baseDir, '/'));
+
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+if (BASE_URL !== '' && str_starts_with($uri, BASE_URL)) {
+    $uri = substr($uri, strlen(BASE_URL));
+}
 $uri = rtrim($uri, '/') ?: '/';
 
 $auth = new AuthController();
@@ -30,10 +39,10 @@ if ($uri === '/contact' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $message = trim($_POST['message'] ?? '');
     if ($name && $email && $subject && $message) {
         Contact::create(['name' => $name, 'email' => $email, 'subject' => $subject, 'message' => $message]);
-        header('Location: /contact?status=success');
+        header('Location: ' . baseUrl('/contact?status=success'));
         exit;
     }
-    header('Location: /contact?status=error');
+    header('Location: ' . baseUrl('/contact?status=error'));
     exit;
 }
 

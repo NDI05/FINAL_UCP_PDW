@@ -8,7 +8,7 @@ class TeamAdminController
     private function requireAuth(): void
     {
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /admin/login');
+            header('Location: ' . baseUrl('/admin/login'));
             exit;
         }
     }
@@ -65,7 +65,7 @@ class TeamAdminController
                     'image' => $image,
                     'order_num' => $orderNum,
                 ]);
-                header('Location: /admin/team');
+                header('Location: ' . baseUrl('/admin/team'));
                 exit;
             }
         }
@@ -107,7 +107,7 @@ class TeamAdminController
 
             if (empty($error)) {
                 TeamMember::update($id, $data);
-                header('Location: /admin/team');
+                header('Location: ' . baseUrl('/admin/team'));
                 exit;
             }
         }
@@ -129,7 +129,7 @@ class TeamAdminController
             TeamMember::delete($id);
         }
 
-        header('Location: /admin/team');
+        header('Location: ' . baseUrl('/admin/team'));
         exit;
     }
 }

@@ -29,7 +29,7 @@
                         <tr class="<?= $i > 0 ? 'border-t border-[#333]' : '' ?> hover:bg-[#111]">
                             <td class="px-4 py-3 text-xs font-mono text-[#666]"><?= (int)$contact['id'] ?></td>
                             <td class="px-4 py-3">
-                                <a href="/admin/contacts/show?id=<?= (int)$contact['id'] ?>" class="text-xs font-display font-semibold text-white hover:text-[#CCFF00] no-underline">
+                                <a href="<?= baseUrl('/admin/contacts/show?id=' . (int)$contact['id']) ?>" class="text-xs font-display font-semibold text-white hover:text-[#CCFF00] no-underline">
                                     <?= htmlspecialchars($contact['name']) ?>
                                 </a>
                             </td>
@@ -44,8 +44,8 @@
                             </td>
                             <td class="px-4 py-3 text-right">
                                 <div class="flex items-center justify-end gap-3">
-                                    <a href="/admin/contacts/show?id=<?= (int)$contact['id'] ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline">[ VIEW ]</a>
-                                    <a href="/admin/contacts/delete?id=<?= (int)$contact['id'] ?>" class="text-[10px] font-mono text-[#666] hover:text-red-400 no-underline" onclick="return confirm('Delete this contact?')">[ DELETE ]</a>
+                                    <a href="<?= baseUrl('/admin/contacts/show?id=' . (int)$contact['id']) ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline">[ VIEW ]</a>
+                                    <a href="<?= baseUrl('/admin/contacts/delete?id=' . (int)$contact['id']) ?>" class="text-[10px] font-mono text-[#666] hover:text-red-400 no-underline" onclick="return confirm('Delete this contact?')">[ DELETE ]</a>
                                 </div>
                             </td>
                         </tr>
@@ -58,11 +58,11 @@
     <?php if ($totalPages > 1): ?>
         <div class="flex items-center justify-center gap-4 mt-8">
             <?php if ($page > 1): ?>
-                <a href="/admin/contacts?page=<?= $page - 1 ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">[ PREV ]</a>
+                <a href="<?= baseUrl('/admin/contacts?page=' . $page - 1) ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">[ PREV ]</a>
             <?php endif; ?>
             <span class="text-[10px] font-mono text-[#333]"><?= $page ?> / <?= $totalPages ?></span>
             <?php if ($page < $totalPages): ?>
-                <a href="/admin/contacts?page=<?= $page + 1 ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">[ NEXT ]</a>
+                <a href="<?= baseUrl('/admin/contacts?page=' . $page + 1) ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">[ NEXT ]</a>
             <?php endif; ?>
         </div>
     <?php endif; ?>

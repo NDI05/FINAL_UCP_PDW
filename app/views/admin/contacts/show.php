@@ -1,6 +1,6 @@
 <div class="max-w-4xl mx-auto px-6 lg:px-10 py-10">
     <div class="mb-8">
-        <a href="/admin/contacts" class="text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">[ &larr; BACK TO CONTACTS ]</a>
+        <a href="<?= baseUrl('/admin/contacts') ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">[ &larr; BACK TO CONTACTS ]</a>
     </div>
 
     <div class="mb-2">
@@ -26,6 +26,6 @@
 
     <div class="flex items-center gap-4 mt-10 pt-8 border-t border-[#333]">
         <a href="mailto:<?= htmlspecialchars($contact['email']) ?>" class="px-6 py-2.5 border border-[#333] text-[10px] font-mono text-white hover:border-[#CCFF00] hover:text-[#CCFF00] no-underline tracking-[.2em] uppercase">[ REPLY ]</a>
-        <a href="/admin/contacts/delete?id=<?= (int)$contact['id'] ?>" class="px-6 py-2.5 border border-[#333] text-[10px] font-mono text-[#666] hover:border-red-400 hover:text-red-400 no-underline tracking-[.2em] uppercase" onclick="return confirm('Delete this contact?')">[ DELETE ]</a>
+        <a href="<?= baseUrl('/admin/contacts/delete?id=' . (int)$contact['id']) ?>" class="px-6 py-2.5 border border-[#333] text-[10px] font-mono text-[#666] hover:border-red-400 hover:text-red-400 no-underline tracking-[.2em] uppercase" onclick="return confirm('Delete this contact?')">[ DELETE ]</a>
     </div>
 </div>

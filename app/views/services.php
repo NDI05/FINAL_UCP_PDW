@@ -67,5 +67,5 @@ endforeach;
 
 <section class="border-b border-[#333] py-16 md:py-18 lg:py-20 text-center px-6">
     <p class="text-xs font-mono text-[#666] tracking-[.3em] uppercase mb-6" data-scroll-reveal>[ NEED A CUSTOM SOLUTION? ]</p>
-    <a href="/contact" class="inline-block px-10 py-3 bg-[#CCFF00] text-[#0a0a0a] font-bold text-sm tracking-[.2em] uppercase font-mono hover:bg-white no-underline" data-scroll-reveal>REQUEST PROPOSAL</a>
+    <a href="<?= baseUrl('/contact') ?>" class="inline-block px-10 py-3 bg-[#CCFF00] text-[#0a0a0a] font-bold text-sm tracking-[.2em] uppercase font-mono hover:bg-white no-underline" data-scroll-reveal>REQUEST PROPOSAL</a>
 </section>

@@ -5,6 +5,6 @@
         <span class="mt-2 sm:mt-0">[ CMS v1.0 ]</span>
     </div>
 </footer>
-<script src="/js/main.js"></script>
+<script src="<?= baseUrl('/js/main.js') ?>"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
             <p class="text-[10px] font-mono text-[#666] tracking-[.3em] uppercase">[ CMS ]</p>
             <h1 class="text-2xl lg:text-3xl font-bold text-white tracking-tight mt-1">SERVICES</h1>
         </div>
-        <a href="/admin/services/create" class="px-5 py-2 bg-[#CCFF00] text-[#0a0a0a] text-[10px] font-mono font-bold tracking-[.2em] uppercase hover:bg-white no-underline">+ CREATE</a>
+        <a href="<?= baseUrl('/admin/services/create') ?>" class="px-5 py-2 bg-[#CCFF00] text-[#0a0a0a] text-[10px] font-mono font-bold tracking-[.2em] uppercase hover:bg-white no-underline">+ CREATE</a>
     </div>
 
     <div class="border border-[#333] overflow-x-auto">
@@ -34,8 +34,8 @@
                             <td class="px-4 py-3 text-xs font-mono text-[#666] hidden sm:table-cell"><?= (int)$service['order_num'] ?></td>
                             <td class="px-4 py-3 text-right">
                                 <div class="flex items-center justify-end gap-3">
-                                    <a href="/admin/services/edit?id=<?= (int)$service['id'] ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline">[ EDIT ]</a>
-                                    <a href="/admin/services/delete?id=<?= (int)$service['id'] ?>" class="text-[10px] font-mono text-[#666] hover:text-red-400 no-underline" onclick="return confirm('Delete this service?')">[ DELETE ]</a>
+                                    <a href="<?= baseUrl('/admin/services/edit?id=' . (int)$service['id']) ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline">[ EDIT ]</a>
+                                    <a href="<?= baseUrl('/admin/services/delete?id=' . (int)$service['id']) ?>" class="text-[10px] font-mono text-[#666] hover:text-red-400 no-underline" onclick="return confirm('Delete this service?')">[ DELETE ]</a>
                                 </div>
                             </td>
                         </tr>

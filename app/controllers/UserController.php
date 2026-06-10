@@ -7,7 +7,7 @@ class UserController
     private function requireAuth(): void
     {
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /admin/login');
+            header('Location: ' . baseUrl('/admin/login'));
             exit;
         }
     }
@@ -59,7 +59,7 @@ class UserController
                     'password' => password_hash($password, PASSWORD_BCRYPT),
                     'role' => $role,
                 ]);
-                header('Location: /admin/users');
+                header('Location: ' . baseUrl('/admin/users'));
                 exit;
             }
         }
@@ -112,7 +112,7 @@ class UserController
                 }
 
                 $this->updateUser($id, $data);
-                header('Location: /admin/users');
+                header('Location: ' . baseUrl('/admin/users'));
                 exit;
             }
 
@@ -138,7 +138,7 @@ class UserController
             $this->deleteUser($id);
         }
 
-        header('Location: /admin/users');
+        header('Location: ' . baseUrl('/admin/users'));
         exit;
     }
 

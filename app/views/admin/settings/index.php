@@ -10,7 +10,7 @@
         </div>
     <?php endif; ?>
 
-    <form method="POST" action="/admin/settings" class="space-y-12">
+    <form method="POST" action="<?= baseUrl('/admin/settings') ?>" class="space-y-12">
         <?php
         $groupOrder = ['general', 'landing', 'about', 'services', 'contact'];
         $groupLabels = [
@@ -91,7 +91,7 @@
                     class="px-8 py-3 bg-[#CCFF00] text-[#0a0a0a] font-bold text-xs tracking-[.2em] uppercase font-mono hover:bg-white rounded-none">
                 [ SAVE ]
             </button>
-            <a href="/admin" class="px-8 py-3 border border-[#333] text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">[ CANCEL ]</a>
+            <a href="<?= baseUrl('/admin') ?>" class="px-8 py-3 border border-[#333] text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">[ CANCEL ]</a>
         </div>
     </form>
 </div>

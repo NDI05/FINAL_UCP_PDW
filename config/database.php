@@ -2,7 +2,7 @@
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'ndi_cms');
 define('DB_USER', 'root');
-define('DB_PASS', 'samarinda');
+define('DB_PASS', '');
 
 function getDB(): mysqli
 {

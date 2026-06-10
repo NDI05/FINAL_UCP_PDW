@@ -7,7 +7,7 @@ class ContactAdminController
     private function requireAuth(): void
     {
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /admin/login');
+            header('Location: ' . baseUrl('/admin/login'));
             exit;
         }
     }
@@ -66,7 +66,7 @@ class ContactAdminController
             $this->deleteById($id);
         }
 
-        header('Location: /admin/contacts');
+        header('Location: ' . baseUrl('/admin/contacts'));
         exit;
     }
 

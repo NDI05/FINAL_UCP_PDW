@@ -1,5 +1,5 @@
 <section class="border-b border-[#333] px-6 lg:px-12 py-10 max-w-3xl">
-    <a href="/admin/articles" class="text-[10px] font-mono text-[#666] tracking-[.2em] uppercase hover:text-white no-underline mb-6 inline-block">[ BACK TO ARTICLES ]</a>
+    <a href="<?= baseUrl('/admin/articles') ?>" class="text-[10px] font-mono text-[#666] tracking-[.2em] uppercase hover:text-white no-underline mb-6 inline-block">[ BACK TO ARTICLES ]</a>
     <p class="text-xs font-mono text-[#666] tracking-[.3em] uppercase mt-4">[ ARTICLES ]</p>
     <h1 class="text-xl sm:text-2xl font-bold text-white tracking-tight mt-2">EDIT <span class="text-[#CCFF00]">ARTICLE</span></h1>
 
@@ -7,7 +7,7 @@
         <div class="border border-[#333] px-4 py-3 mt-6"><p class="text-xs font-mono text-[#666]"><?= htmlspecialchars($error) ?></p></div>
     <?php endif; ?>
 
-    <form method="POST" action="/admin/articles/edit?id=<?= $article['id'] ?>" enctype="multipart/form-data" class="mt-8 space-y-6">
+    <form method="POST" action="<?= baseUrl('/admin/articles/edit?id=' . $article['id']) ?>" enctype="multipart/form-data" class="mt-8 space-y-6">
         <div>
             <label for="title" class="block text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mb-2">[ TITLE ]</label>
             <input type="text" id="title" name="title" required value="<?= htmlspecialchars($article['title']) ?>" oninput="slugify(this.value)" class="w-full bg-transparent border border-[#333] px-4 py-3 text-white text-sm font-mono outline-none focus:border-[#CCFF00] no-underline">
@@ -31,7 +31,7 @@
         <div>
             <label class="block text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mb-2">[ CURRENT IMAGE ]</label>
             <?php if (!empty($article['image'])): ?>
-                <div class="border border-[#333] p-2 inline-block"><img src="/<?= htmlspecialchars($article['image']) ?>" alt="" class="h-24 object-contain grayscale"></div>
+                <div class="border border-[#333] p-2 inline-block"><img src="<?= baseUrl('/' . htmlspecialchars($article['image'])) ?>" alt="" class="h-24 object-contain grayscale"></div>
             <?php else: ?>
                 <p class="text-xs font-mono text-[#333]">No image</p>
             <?php endif; ?>
@@ -43,7 +43,7 @@
         </div>
         <div class="flex items-center gap-4">
             <button type="submit" class="px-8 py-3 bg-[#CCFF00] text-[#0a0a0a] font-bold text-xs tracking-[.2em] uppercase font-mono hover:bg-white no-underline">UPDATE ARTICLE</button>
-            <a href="/admin/articles/delete?id=<?= $article['id'] ?>" class="px-6 py-3 border border-[#333] text-[#666] text-xs tracking-[.2em] uppercase font-mono hover:border-white hover:text-white no-underline" onclick="return confirm('Delete this article?')">DELETE</a>
+            <a href="<?= baseUrl('/admin/articles/delete?id=' . $article['id']) ?>" class="px-6 py-3 border border-[#333] text-[#666] text-xs tracking-[.2em] uppercase font-mono hover:border-white hover:text-white no-underline" onclick="return confirm('Delete this article?')">DELETE</a>
         </div>
     </form>
 </section>

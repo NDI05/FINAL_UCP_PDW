@@ -7,7 +7,7 @@ class SiteSettingController
     private function requireAuth(): void
     {
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /admin/login');
+            header('Location: ' . baseUrl('/admin/login'));
             exit;
         }
     }

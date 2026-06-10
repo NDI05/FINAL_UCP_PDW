@@ -21,7 +21,7 @@
             <div class="border border-[#333] px-4 py-3 mb-6"><p class="text-xs font-mono text-[#666] text-center"><?= htmlspecialchars($error) ?></p></div>
         <?php endif; ?>
 
-        <form method="POST" action="/admin/login" class="space-y-5">
+        <form method="POST" action="<?= baseUrl('/admin/login') ?>" class="space-y-5">
             <div>
                 <label for="username" class="block text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mb-2">[ USERNAME / EMAIL ]</label>
                 <input type="text" id="username" name="username" required class="w-full bg-transparent border border-[#333] px-4 py-3 text-white text-sm font-mono outline-none focus:border-[#CCFF00] no-underline">
@@ -33,7 +33,7 @@
             <button type="submit" class="w-full py-3 bg-[#CCFF00] text-[#0a0a0a] font-bold text-xs tracking-[.2em] uppercase font-mono hover:bg-white no-underline">LOGIN</button>
         </form>
 
-        <a href="/" class="block text-center mt-6 text-[10px] font-mono text-[#666] tracking-[.2em] uppercase hover:text-white no-underline">[ BACK TO SITE ]</a>
+        <a href="<?= baseUrl('/') ?>" class="block text-center mt-6 text-[10px] font-mono text-[#666] tracking-[.2em] uppercase hover:text-white no-underline">[ BACK TO SITE ]</a>
     </div>
 </body>
 </html>

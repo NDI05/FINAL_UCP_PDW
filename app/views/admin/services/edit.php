@@ -10,7 +10,7 @@
         </div>
     <?php endif; ?>
 
-    <form method="POST" action="/admin/services/edit?id=<?= (int)$service['id'] ?>" enctype="multipart/form-data" class="space-y-8">
+    <form method="POST" action="<?= baseUrl('/admin/services/edit?id=' . (int)$service['id']) ?>" enctype="multipart/form-data" class="space-y-8">
         <div>
             <label for="title" class="block text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mb-2">[ TITLE ]</label>
             <input type="text" id="title" name="title" required value="<?= htmlspecialchars($service['title']) ?>"
@@ -27,7 +27,7 @@
             <label class="block text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mb-2">[ CURRENT IMAGE ]</label>
             <?php if (!empty($service['image'])): ?>
                 <div class="border border-[#333] p-2 inline-block">
-                    <img src="/<?= htmlspecialchars($service['image']) ?>" alt="Current" class="h-32 w-auto grayscale">
+                    <img src="<?= baseUrl('/' . htmlspecialchars($service['image'])) ?>" alt="Current" class="h-32 w-auto grayscale">
                 </div>
             <?php else: ?>
                 <p class="text-[10px] font-mono text-[#333]">No image</p>
@@ -52,7 +52,7 @@
                     class="px-8 py-3 bg-[#CCFF00] text-[#0a0a0a] font-bold text-xs tracking-[.2em] uppercase font-mono hover:bg-white rounded-none">
                 [ UPDATE ]
             </button>
-            <a href="/admin/services" class="px-8 py-3 border border-[#333] text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">[ CANCEL ]</a>
+            <a href="<?= baseUrl('/admin/services') ?>" class="px-8 py-3 border border-[#333] text-[10px] font-mono text-[#666] hover:text-white no-underline tracking-[.2em] uppercase">[ CANCEL ]</a>
         </div>
     </form>
 </div>

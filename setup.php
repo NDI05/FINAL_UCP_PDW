@@ -1,7 +1,7 @@
 <?php
 $dbHost = 'localhost';
 $dbUser = 'root';
-$dbPass = 'samarinda';
+$dbPass = '';
 $dbName = 'ndi_cms';
 
 $success = [];

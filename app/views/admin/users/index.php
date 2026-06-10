@@ -4,7 +4,7 @@
             <p class="text-[10px] font-mono text-[#666] tracking-[.3em] uppercase">[ ADMIN ]</p>
             <h1 class="text-2xl lg:text-3xl font-bold text-white tracking-tight mt-1">USERS</h1>
         </div>
-        <a href="/admin/users/create" class="px-5 py-2 bg-[#CCFF00] text-[#0a0a0a] text-[10px] font-mono font-bold tracking-[.2em] uppercase hover:bg-white no-underline">+ CREATE</a>
+        <a href="<?= baseUrl('/admin/users/create') ?>" class="px-5 py-2 bg-[#CCFF00] text-[#0a0a0a] text-[10px] font-mono font-bold tracking-[.2em] uppercase hover:bg-white no-underline">+ CREATE</a>
     </div>
 
     <div class="border border-[#333] overflow-x-auto">
@@ -44,9 +44,9 @@
                             </td>
                             <td class="px-4 py-3 text-right">
                                 <div class="flex items-center justify-end gap-3">
-                                    <a href="/admin/users/edit?id=<?= (int)$u['id'] ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline">[ EDIT ]</a>
+                                    <a href="<?= baseUrl('/admin/users/edit?id=' . (int)$u['id']) ?>" class="text-[10px] font-mono text-[#666] hover:text-white no-underline">[ EDIT ]</a>
                                     <?php if ((int)$u['id'] !== (int)($_SESSION['user_id'] ?? 0)): ?>
-                                        <a href="/admin/users/delete?id=<?= (int)$u['id'] ?>" class="text-[10px] font-mono text-[#666] hover:text-red-400 no-underline" onclick="return confirm('Delete this user?')">[ DELETE ]</a>
+                                        <a href="<?= baseUrl('/admin/users/delete?id=' . (int)$u['id']) ?>" class="text-[10px] font-mono text-[#666] hover:text-red-400 no-underline" onclick="return confirm('Delete this user?')">[ DELETE ]</a>
                                     <?php else: ?>
                                         <span class="text-[10px] font-mono text-[#333] tracking-[.2em]">[ YOU ]</span>
                                     <?php endif; ?>

@@ -8,7 +8,7 @@ class ServiceAdminController
     private function requireAuth(): void
     {
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /admin/login');
+            header('Location: ' . baseUrl('/admin/login'));
             exit;
         }
     }
@@ -60,7 +60,7 @@ class ServiceAdminController
                     'image' => $image,
                     'order_num' => $orderNum,
                 ]);
-                header('Location: /admin/services');
+                header('Location: ' . baseUrl('/admin/services'));
                 exit;
             }
         }
@@ -102,7 +102,7 @@ class ServiceAdminController
 
             if (empty($error)) {
                 Service::update($id, $data);
-                header('Location: /admin/services');
+                header('Location: ' . baseUrl('/admin/services'));
                 exit;
             }
         }
@@ -124,7 +124,7 @@ class ServiceAdminController
             Service::delete($id);
         }
 
-        header('Location: /admin/services');
+        header('Location: ' . baseUrl('/admin/services'));
         exit;
     }
 }

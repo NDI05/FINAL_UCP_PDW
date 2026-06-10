@@ -16,7 +16,7 @@
                 <div class="border border-[#333] px-4 py-4 mb-6 text-center"><p class="text-xs font-mono text-[#666] tracking-[.2em] uppercase">[ SENDING FAILED ]</p><p class="text-[10px] font-mono text-[#333] mt-1">Please fill in all fields and try again.</p></div>
             <?php endif; ?>
 
-            <form action="/contact" method="POST" class="space-y-6" data-scroll-reveal>
+            <form action="<?= baseUrl('/contact') ?>" method="POST" class="space-y-6" data-scroll-reveal>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div><label for="name" class="block text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mb-2">[ NAME ]</label><input type="text" id="name" name="name" required class="w-full bg-transparent border border-[#333] px-4 py-3 text-white text-sm font-mono outline-none focus:border-[#CCFF00] no-underline"></div>
                     <div><label for="email" class="block text-[10px] font-mono text-[#666] tracking-[.2em] uppercase mb-2">[ EMAIL ]</label><input type="email" id="email" name="email" required class="w-full bg-transparent border border-[#333] px-4 py-3 text-white text-sm font-mono outline-none focus:border-[#CCFF00] no-underline"></div>
