@@ -18,6 +18,11 @@
         <div class="flex items-center gap-6">
             <a href="/admin" class="text-[#CCFF00] font-bold tracking-[.15em] text-sm font-mono no-underline">[ NDI CMS ]</a>
             <a href="/admin/articles" class="text-xs font-mono text-[#666] tracking-[.2em] uppercase hover:text-white no-underline">[ ARTICLES ]</a>
+            <a href="/admin/services" class="text-xs font-mono text-[#666] tracking-[.2em] uppercase hover:text-white no-underline">[ SERVICES ]</a>
+            <a href="/admin/team" class="text-xs font-mono text-[#666] tracking-[.2em] uppercase hover:text-white no-underline">[ TEAM ]</a>
+            <a href="/admin/contacts" class="text-xs font-mono text-[#666] tracking-[.2em] uppercase hover:text-white no-underline">[ CONTACTS ]</a>
+            <a href="/admin/users" class="text-xs font-mono text-[#666] tracking-[.2em] uppercase hover:text-white no-underline">[ USERS ]</a>
+            <a href="/admin/settings" class="text-xs font-mono text-[#666] tracking-[.2em] uppercase hover:text-white no-underline">[ SETTINGS ]</a>
         </div>
         <div class="flex items-center gap-4">
             <span class="text-[10px] font-mono text-[#666]"><?= htmlspecialchars($_SESSION['username'] ?? '') ?></span>

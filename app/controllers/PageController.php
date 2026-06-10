@@ -10,12 +10,16 @@ class PageController
 
     public function render(string $page): void
     {
-        if (!isset($this->pages[$page])) {
-            $page = 'landing';
-        }
+        if (!isset($this->pages[$page])) $page = 'landing';
+
+        require_once __DIR__ . '/../models/SiteSetting.php';
 
         $data = $this->pages[$page];
-        $pageTitle = $data['title'];
+        if ($page === 'landing') {
+            $pageTitle = SiteSetting::get('site_name', 'Nusa Data Indonesia') . ' — ' . SiteSetting::get('site_tagline', 'Data Intelligence for the Archipelago');
+        } else {
+            $pageTitle = $data['title'] . ' — ' . SiteSetting::get('site_name', 'Nusa Data Indonesia');
+        }
         $viewFile = __DIR__ . '/../views/' . $data['view'] . '.php';
 
         require_once __DIR__ . '/../views/partials/header.php';
@@ -23,7 +27,7 @@ class PageController
         if (file_exists($viewFile)) {
             require $viewFile;
         } else {
-            echo '<main class="min-h-screen flex items-center justify-center"><p class="text-gray-500 text-lg">Page not found.</p></main>';
+            echo '<main class="min-h-screen flex items-center justify-center"><p class="text-[#666] font-mono text-sm">[ 404 ] Page not found.</p></main>';
         }
 
         require_once __DIR__ . '/../views/partials/footer.php';

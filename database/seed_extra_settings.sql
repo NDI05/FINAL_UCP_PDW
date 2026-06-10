@@ -1,0 +1,23 @@
+INSERT INTO site_settings (`key`, `value`, `label`, `group`) VALUES
+('about_team1_name', 'Alexander D.', 'Team 1 Name', 'about'),
+('about_team1_role', 'Founder & CEO', 'Team 1 Role', 'about'),
+('about_team1_image', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop&q=80', 'Team 1 Image', 'about'),
+('about_team2_name', 'Sari R.', 'Team 2 Name', 'about'),
+('about_team2_role', 'Lead Developer', 'Team 2 Role', 'about'),
+('about_team2_image', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&h=400&fit=crop&q=80', 'Team 2 Image', 'about'),
+('about_team3_name', 'Budi P.', 'Team 3 Name', 'about'),
+('about_team3_role', 'Project Manager', 'Team 3 Role', 'about'),
+('about_team3_image', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=400&fit=crop&q=80', 'Team 3 Image', 'about'),
+('service1_title', 'Web Development', 'Service 1 Title', 'services'),
+('service1_desc', 'From landing pages to enterprise platforms — we build scalable, secure, and performant web solutions using modern architectures.', 'Service 1 Description', 'services'),
+('service1_image', 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=500&fit=crop&q=80', 'Service 1 Image', 'services'),
+('service2_title', 'Website Redesign', 'Service 2 Title', 'services'),
+('service2_desc', 'Transform existing digital presence into a modern, high-performance experience without compromising brand identity.', 'Service 2 Description', 'services'),
+('service2_image', 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=500&fit=crop&q=80', 'Service 2 Image', 'services'),
+('service3_title', 'Network Architecture', 'Service 3 Title', 'services'),
+('service3_desc', 'Design and implementation of resilient, secure, and scalable network infrastructure for organizations of any size.', 'Service 3 Description', 'services'),
+('service3_image', 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop&q=80', 'Service 3 Image', 'services'),
+('service4_title', 'CMS Development', 'Service 4 Title', 'services'),
+('service4_desc', 'Custom content management platforms engineered for editorial workflows, media management, and publishing at scale.', 'Service 4 Description', 'services'),
+('service4_image', 'https://images.unsplash.com/photo-1537432376044-ea2f1c5e7f4b?w=800&h=500&fit=crop&q=80', 'Service 4 Image', 'services')
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `label` = VALUES(`label`), `group` = VALUES(`group`);

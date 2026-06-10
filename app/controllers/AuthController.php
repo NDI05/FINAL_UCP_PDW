@@ -11,9 +11,7 @@ class AuthController
             $password = $_POST['password'] ?? '';
 
             $user = User::findByUsername($username);
-            if (!$user) {
-                $user = User::findByEmail($username);
-            }
+            if (!$user) $user = User::findByEmail($username);
 
             if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user_id'] = $user['id'];
@@ -22,12 +20,10 @@ class AuthController
                 session_regenerate_id(true);
                 $this->redirect('/admin');
             }
-
             $error = 'Invalid credentials.';
             require __DIR__ . '/../views/admin/login.php';
             return;
         }
-
         $error = null;
         require __DIR__ . '/../views/admin/login.php';
     }
@@ -46,9 +42,7 @@ class AuthController
 
     public function requireAuth(): void
     {
-        if (!$this->isAuthenticated()) {
-            $this->redirect('/admin/login');
-        }
+        if (!$this->isAuthenticated()) $this->redirect('/admin/login');
     }
 
     private function redirect(string $url): void

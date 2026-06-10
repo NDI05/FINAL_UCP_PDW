@@ -106,3 +106,7 @@ header[data-nav].nav-hidden {
 .animate-pulse-dot {
     animation: pulse-dot 2s cubic-bezier(0.85, 0, 0.15, 1) infinite;
 }
+
+input, textarea, button, a, img, div, section, header, footer, nav, main {
+    border-radius: 0 !important;
+}
