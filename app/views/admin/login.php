@@ -32,6 +32,8 @@
             </div>
             <button type="submit" class="w-full py-3 bg-[#CCFF00] text-[#0a0a0a] font-bold text-xs tracking-[.2em] uppercase font-mono hover:bg-white no-underline">LOGIN</button>
         </form>
+
+        <a href="/" class="block text-center mt-6 text-[10px] font-mono text-[#666] tracking-[.2em] uppercase hover:text-white no-underline">[ BACK TO SITE ]</a>
     </div>
 </body>
 </html>
