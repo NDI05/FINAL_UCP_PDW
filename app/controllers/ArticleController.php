@@ -5,22 +5,11 @@ require_once __DIR__ . '/../helpers/Uploader.php';
 
 class ArticleController
 {
-    public function handle(string $uri): void
+    private function requireAuth(): void
     {
-        switch (true) {
-            case $uri === '/admin/articles' || $uri === '/admin/articles/':
-                $this->index(); break;
-            case $uri === '/admin/articles/create':
-                $this->create(); break;
-            case $uri === '/admin/articles/edit':
-                $this->edit(); break;
-            case $uri === '/admin/articles/delete':
-                $this->delete(); break;
-            case $uri === '/admin/articles/show':
-                $this->show(); break;
-            default:
-                http_response_code(404);
-                echo '<div class="p-10 text-center font-mono text-[#666] text-sm">[ 404 ] Page not found.</div>';
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /admin/login');
+            exit;
         }
     }
 
