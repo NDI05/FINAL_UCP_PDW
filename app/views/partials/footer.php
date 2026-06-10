@@ -3,22 +3,22 @@
 <section class="border-t border-[#333]">
     <div class="flex flex-wrap">
         <div data-parallax class="w-1/3 sm:w-1/4 lg:w-1/6 h-40 sm:h-48 bg-[#111] overflow-hidden border-r border-[#333]">
-            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop&q=80" alt="Server infrastructure" class="w-full h-full object-cover grayscale opacity-70" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop&q=80" alt="Server" class="w-full h-full object-cover grayscale opacity-70" loading="lazy">
         </div>
         <div data-parallax class="w-1/3 sm:w-1/4 lg:w-1/6 h-40 sm:h-48 bg-[#111] overflow-hidden border-r border-[#333]">
-            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop&q=80" alt="Code on screen" class="w-full h-full object-cover grayscale opacity-70" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop&q=80" alt="Code" class="w-full h-full object-cover grayscale opacity-70" loading="lazy">
         </div>
         <div data-parallax class="w-1/3 sm:w-1/4 lg:w-1/6 h-40 sm:h-48 bg-[#111] overflow-hidden border-r border-[#333]">
-            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop&q=80" alt="Circuit board" class="w-full h-full object-cover grayscale opacity-70" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop&q=80" alt="Circuit" class="w-full h-full object-cover grayscale opacity-70" loading="lazy">
         </div>
         <div data-parallax class="w-1/3 sm:w-1/4 lg:w-1/6 h-40 sm:h-48 bg-[#111] overflow-hidden border-r border-[#333]">
-            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop&q=80" alt="Network infrastructure" class="w-full h-full object-cover grayscale opacity-70" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop&q=80" alt="Network" class="w-full h-full object-cover grayscale opacity-70" loading="lazy">
         </div>
         <div data-parallax class="hidden sm:block lg:w-1/6 h-48 bg-[#111] overflow-hidden border-r border-[#333]">
-            <img src="https://images.unsplash.com/photo-1537432376044-ea2f1c5e7f4b?w=400&h=300&fit=crop&q=80" alt="Developer workspace" class="w-full h-full object-cover grayscale opacity-70" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1537432376044-ea2f1c5e7f4b?w=400&h=300&fit=crop&q=80" alt="Dev" class="w-full h-full object-cover grayscale opacity-70" loading="lazy">
         </div>
         <div data-parallax class="hidden lg:block lg:w-1/6 h-48 bg-[#111] overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop&q=80" alt="Modern office" class="w-full h-full object-cover grayscale opacity-70" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop&q=80" alt="Office" class="w-full h-full object-cover grayscale opacity-70" loading="lazy">
         </div>
     </div>
 </section>
@@ -34,7 +34,7 @@
 
 <footer class="border-t border-[#333]">
     <div class="flex flex-col sm:flex-row items-center justify-between px-6 lg:px-12 py-4 text-[10px] font-mono text-[#666] uppercase tracking-wider">
-        <span>&copy; <?= date('Y') ?> NUSA DATA INDONESIA</span>
+        <span>&copy; <?= date('Y') ?> <?= strtoupper(htmlspecialchars(SiteSetting::get('site_name', 'NUSA DATA INDONESIA'))) ?></span>
         <div class="flex gap-6 mt-2 sm:mt-0">
             <a href="#" class="hover:text-white no-underline">[ TERMS ]</a>
             <a href="#" class="hover:text-white no-underline">[ PRIVACY ]</a>

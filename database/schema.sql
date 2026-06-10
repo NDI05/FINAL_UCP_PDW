@@ -1,3 +1,4 @@
+-- Active: 1779261121855@@127.0.0.1@3306
 CREATE DATABASE IF NOT EXISTS ndi_cms CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE ndi_cms;
 
@@ -27,6 +28,15 @@ CREATE TABLE visitors (
     INDEX idx_page (page)
 ) ENGINE=InnoDB;
 
+CREATE TABLE contacts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    subject VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
 CREATE TABLE articles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
@@ -40,15 +50,27 @@ CREATE TABLE articles (
     FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
-CREATE TABLE contacts (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    subject VARCHAR(255) NOT NULL,
-    message TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB;
-
 INSERT INTO users (username, email, password, role) VALUES
 ('admin', 'admin@nusadataindonesia.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin');
--- Default password: password
+
+CREATE TABLE IF NOT EXISTS site_settings (
+    `key` VARCHAR(100) PRIMARY KEY,
+    `value` TEXT NULL,
+    `label` VARCHAR(255) NOT NULL DEFAULT '',
+    `group` VARCHAR(50) NOT NULL DEFAULT 'general',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+INSERT IGNORE INTO site_settings (`key`, `value`, `label`, `group`) VALUES
+('landing_hero_eyebrow', 'WE ARE NDI', 'Hero Eyebrow Text', 'landing'),
+('landing_hero_title', 'DATA IS THE NEW TERRITORY', 'Hero Main Title', 'landing'),
+('landing_hero_subtitle', 'Nusa Data Indonesia transforms raw data into strategic advantage for organizations across the archipelago.', 'Hero Subtitle', 'landing'),
+('landing_statement', 'In a world driven by information, those who understand data lead the conversation. We exist to make that leadership accessible.', 'Statement Section Text', 'landing'),
+('about_tagline', 'We are not consultants. We are navigators.', 'About Tagline', 'about'),
+('about_intro', 'Founded in the archipelago, Nusa Data Indonesia exists at the intersection of data science, strategic consulting, and local intelligence.', 'About Intro Text', 'about'),
+('services_intro', 'Four core capabilities. One integrated approach to data intelligence.', 'Services Intro Text', 'services'),
+('contact_address', 'Jl. Sudirman No. 123, Jakarta Selatan, DKI Jakarta 12190', 'Office Address', 'contact'),
+('contact_email', 'hello@nusadataindonesia.com', 'Contact Email', 'contact'),
+('contact_phone', '+62 21 1234 5678', 'Contact Phone', 'contact'),
+('site_name', 'Nusa Data Indonesia', 'Site Name', 'general'),
+('site_tagline', 'Data Intelligence for the Archipelago', 'Site Tagline', 'general');
