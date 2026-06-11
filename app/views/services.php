@@ -17,7 +17,7 @@ foreach ($services as $s):
     $title = $s['title'];
     $desc = $s['description'];
     $img = $s['image'];
-    $imgUrl = !empty($img) ? (str_starts_with($img, 'http') ? $img : '/' . $img) : '';
+    $imgUrl = !empty($img) ? (str_starts_with($img, 'http') ? $img : baseUrl('/' . ltrim($img, '/'))) : '';
     $svcCode = 'SVC-' . str_pad($index + 1, 3, '0', STR_PAD_LEFT);
     $isEven = ($index % 2 === 0);
 ?>

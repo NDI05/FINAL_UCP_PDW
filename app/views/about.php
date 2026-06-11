@@ -44,7 +44,7 @@
                 $name = $m['name'];
                 $role = $m['role'];
                 $img = $m['image'];
-                $imgUrl = !empty($img) ? (str_starts_with($img, 'http') ? $img : '/' . $img) : '';
+                $imgUrl = !empty($img) ? (str_starts_with($img, 'http') ? $img : baseUrl('/' . ltrim($img, '/'))) : '';
                 
                 $isLastInRow = ($i % 3 === 0);
                 $isLastRow = ($i > ($totalMembers - ($totalMembers % 3 ?: 3)));

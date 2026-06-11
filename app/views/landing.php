@@ -52,7 +52,7 @@
             $title = $s['title'];
             $desc = $s['description'];
             $img = $s['image'];
-            $imgUrl = !empty($img) ? (str_starts_with($img, 'http') ? $img : '/' . $img) : '';
+            $imgUrl = !empty($img) ? (str_starts_with($img, 'http') ? $img : baseUrl('/' . ltrim($img, '/'))) : '';
         ?>
             <div>
                 <div data-parallax class="h-40 sm:h-48 lg:h-56 bg-[#111] overflow-hidden">
